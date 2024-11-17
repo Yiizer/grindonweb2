@@ -33,3 +33,7 @@ route::get('delete_category/{id}',[AdminController::class,'delete_category'])->m
 route::get('edit_category/{id}',[AdminController::class,'edit_category'])->middleware(['auth','admin']);
 
 route::POST('update_category/{id}',[AdminController::class,'update_category'])->middleware(['auth','admin']);
+
+route::get('add_product',[AdminController::class,'add_product'])->middleware(['auth','admin']);
+
+route::POST('upload_product',[AdminController::class,'upload_product'])->middleware(['auth','admin']);
