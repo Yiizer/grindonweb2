@@ -122,7 +122,7 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
-
+    
     public function product_search(Request $request)
     {
         $search = $request->search;
