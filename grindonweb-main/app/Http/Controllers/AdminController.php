@@ -10,6 +10,8 @@ use App\Models\Order;
 
 use App\Models\Product;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class AdminController extends Controller
 {
     public function view_category()
@@ -207,6 +209,16 @@ class AdminController extends Controller
 
         return redirect('/view_orders');
 
+    }
+
+    public function print_pdf($id)
+    {
+
+            $data = Order::find($id);
+
+        $pdf = Pdf::loadView('admin.invoice',compact('data'));
+
+        return $pdf->download('invoice.pdf');
     }
 
 
