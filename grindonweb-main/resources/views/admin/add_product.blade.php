@@ -73,13 +73,15 @@
 
                     <div class="input_deg">
                         <label>Price</label>
-                        <input type="text" name="price">
+                        <input type="number" name="price" step="1" min="0" max="100000" pattern="[0-9]+" title="Only numbers are allowed and up to a maximum of 100000" required>
                     </div>
+
 
                     <div class="input_deg">
                         <label>Quantity</label>
-                        <input type="number" name="qty">
+                        <input type="number" name="qty" min="0" max="1000" pattern="[0-9]+" title="Only numbers are allowed and up to a maximum of 1000" required>
                     </div>
+
 
                     <div class="input_deg">
                         <label>Product Category</label>
