@@ -196,4 +196,85 @@ class HomeController extends Controller
 
         return view('home.order',compact('count','order'));
     }
+
+    public function shop()
+    {
+        $product = Product::all();
+
+        if(Auth::id())
+        {
+            $user = Auth::user();
+
+            $userid = $user->id;
+
+            $count = Cart::where('user_id',$userid)->count();
+        }
+
+        else
+        {
+            $count = '';
+        }
+
+        return view('home.shop',compact('product','count'));
+    }
+
+    public function why()
+    {
+
+        if(Auth::id())
+        {
+            $user = Auth::user();
+
+            $userid = $user->id;
+
+            $count = Cart::where('user_id',$userid)->count();
+        }
+
+        else
+        {
+            $count = '';
+        }
+
+        return view('home.why',compact('count'));
+    }
+
+    public function testimonial()
+    {
+
+        if(Auth::id())
+        {
+            $user = Auth::user();
+
+            $userid = $user->id;
+
+            $count = Cart::where('user_id',$userid)->count();
+        }
+
+        else
+        {
+            $count = '';
+        }
+
+        return view('home.testimonial',compact('count'));
+    }
+
+    public function contact()
+    {
+
+        if(Auth::id())
+        {
+            $user = Auth::user();
+
+            $userid = $user->id;
+
+            $count = Cart::where('user_id',$userid)->count();
+        }
+
+        else
+        {
+            $count = '';
+        }
+
+        return view('home.contact',compact('count'));
+    }
 }
