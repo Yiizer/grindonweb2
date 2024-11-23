@@ -7,7 +7,7 @@
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{ asset('images/Logo/Glogo.png') }}" type="image/png">
+  <link rel="shortcut icon" href="{{ asset('images/Logo/Gwhite.png') }}" type="image/png">
 
   <title>
     GrindOn
