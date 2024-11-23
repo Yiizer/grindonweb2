@@ -181,11 +181,12 @@ class AdminController extends Controller
     }
 
     public function view_orders()
-    {
-        $data = Order::all();
+{
+    // Fetch all orders along with the associated product (with size, color, and quantity)
+    $data = Order::with('product')->get(); 
 
-        return view('admin.order',compact('data'));
-    }
+    return view('admin.order', compact('data'));
+}
 
     public function on_the_way($id)
     {

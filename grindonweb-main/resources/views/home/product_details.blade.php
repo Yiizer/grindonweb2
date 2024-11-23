@@ -68,10 +68,40 @@
               <p>{{ $data->description }}</p>
             </div>
 
-            <!-- Add to Cart Button -->
-            <div class="add-to-cart-btn">
-              <a class="btn btn-primary" href="{{ url('add_cart', $data->id) }}">Add to Cart</a>
-            </div>
+            <!-- Add to Cart Form -->
+            <form action="{{ route('add_cart', $data->id) }}" method="POST">
+              @csrf
+
+              <!-- Size selection -->
+              <div class="detail-box">
+                <label for="size">Size:</label>
+                <select name="size" id="size" required>
+                  <option value="Small">Small</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Large">Large</option>
+                </select>
+              </div>
+
+              <!-- Color selection -->
+              <div class="detail-box">
+                <label for="color">Color:</label>
+                <select name="color" id="color" required>
+                  <option value="Black">Black</option>
+                  <option value="White">White</option>
+                </select>
+              </div>
+
+              <!-- Quantity selection -->
+              <div class="detail-box">
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $data->quantity }}" required>
+              </div>
+
+              <!-- Submit button -->
+              <div class="add-to-cart-btn">
+                <button type="submit" class="btn btn-primary">Add to Cart</button>
+              </div>
+            </form>
 
           </div>
         </div>
