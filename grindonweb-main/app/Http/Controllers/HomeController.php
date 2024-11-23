@@ -100,29 +100,36 @@ class HomeController extends Controller
     public function add_cart(Request $request, $id)
     {
         $product = Product::find($id);
-    
+        
         if (!$product) {
             return redirect()->back()->with('error', 'Product not found.');
         }
-    
+        
+        // Validate input
+        $request->validate([
+            'quantity' => 'required|integer|min:1|max:' . $product->quantity,
+            'size' => 'required|string',
+            'color' => 'required|string',
+        ]);
+        
         $user = Auth::user();
         $user_id = $user->id;
-    
+        
         $size = $request->input('size');
         $color = $request->input('color');
         $quantity = $request->input('quantity');
-    
+        
         // Check if the quantity requested is available in stock
         if ($quantity > $product->quantity) {
             return redirect()->back()->with('error', 'Insufficient stock available.');
         }
-    
+        
         $existingCart = Cart::where('user_id', $user_id)
                             ->where('product_id', $product->id)
                             ->where('size', $size)
                             ->where('color', $color)
                             ->first();
-    
+        
         if ($existingCart) {
             $existingCart->quantity += $quantity;
             $existingCart->save();
@@ -135,7 +142,7 @@ class HomeController extends Controller
             $data->quantity = $quantity;
             $data->save();
         }
-    
+        
         toastr()->timeOut(10000)->closeButton()->addSuccess('Product Added to the Cart Successfully');
         return redirect()->back();
     }
@@ -167,49 +174,49 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function confirm_order(Request $request)
-    {
-        DB::beginTransaction();
-    
-        try {
-            $name = $request->name;
-            $address = $request->address;
-            $phone = $request->phone;
-            $userid = Auth::user()->id;
-            $cart = Cart::where('user_id', $userid)->get();
-    
-            foreach ($cart as $carts) {
-                // Create the order
-                $order = new Order;
-                $order->product_id = $carts->product_id;
-                $order->name = $name;
-                $order->rec_address = $address;
-                $order->phone = $phone;
-                $order->user_id = $userid;
-                $order->size = $carts->size;
-                $order->color = $carts->color;
-                $order->quantity = $carts->quantity;
-                $order->status = 'in progress'; // Default status
-                $order->save();
-    
-                // Deduct product stock
-                $product = Product::find($carts->product_id);
-                $product->quantity -= $carts->quantity;
-                $product->save();
-            }
-    
-            // Clear the cart after order confirmation
-            Cart::where('user_id', $userid)->delete();
-    
-            DB::commit();
-            
-            toastr()->timeOut(10000)->closeButton()->addSuccess('Product Ordered Successfully');
-            return redirect()->back();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->back()->with('error', 'Order failed: ' . $e->getMessage());
+   public function confirm_order(Request $request)
+{
+    DB::beginTransaction();
+
+    try {
+        $name = $request->name;
+        $address = $request->address;
+        $phone = $request->phone;
+        $userid = Auth::user()->id;
+        $cart = Cart::where('user_id', $userid)->get();
+
+        foreach ($cart as $carts) {
+            // Create the order
+            $order = new Order;
+            $order->product_id = $carts->product_id;
+            $order->name = $name;
+            $order->rec_address = $address;
+            $order->phone = $phone;
+            $order->user_id = $userid;
+            $order->size = $carts->size;
+            $order->color = $carts->color;
+            $order->quantity = $carts->quantity;
+            $order->status = 'in progress'; // Default status
+            $order->save();
+
+            // Deduct product stock
+            $product = Product::find($carts->product_id);
+            $product->quantity -= $carts->quantity;
+            $product->save();
         }
+
+        // Clear the cart after order confirmation
+        Cart::where('user_id', $userid)->delete();
+
+        DB::commit();
+        
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Product Ordered Successfully');
+        return redirect()->back();
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return redirect()->back()->with('error', 'Order failed: ' . $e->getMessage());
     }
+}
 
     public function myorders()
     {

@@ -45,7 +45,7 @@
           <div class="box">
 
             <div class="div_center">
-              <img width="400" src="/products/{{$data->image}}" alt="">
+              <img width="400" src="/products/{{$data->image}}" alt="Product Image">
             </div>
 
             <div class="detail-box">
@@ -69,16 +69,16 @@
             </div>
 
             <!-- Add to Cart Form -->
-            <form action="{{ route('add_cart', $data->id) }}" method="POST">
+            <form action="{{ route('add.cart', $data->id) }}" method="POST">
               @csrf
 
               <!-- Size selection -->
               <div class="detail-box">
                 <label for="size">Size:</label>
                 <select name="size" id="size" required>
-                  <option value="Small">Small</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Large">Large</option>
+                  <option value="Small" {{ old('size') == 'Small' ? 'selected' : '' }}>Small</option>
+                  <option value="Medium" {{ old('size') == 'Medium' ? 'selected' : '' }}>Medium</option>
+                  <option value="Large" {{ old('size') == 'Large' ? 'selected' : '' }}>Large</option>
                 </select>
               </div>
 
@@ -86,8 +86,8 @@
               <div class="detail-box">
                 <label for="color">Color:</label>
                 <select name="color" id="color" required>
-                  <option value="Black">Black</option>
-                  <option value="White">White</option>
+                  <option value="Black" {{ old('color') == 'Black' ? 'selected' : '' }}>Black</option>
+                  <option value="White" {{ old('color') == 'White' ? 'selected' : '' }}>White</option>
                 </select>
               </div>
 
@@ -99,7 +99,11 @@
 
               <!-- Submit button -->
               <div class="add-to-cart-btn">
-                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                @if ($data->quantity == 0)
+                    <button type="button" class="btn btn-danger" disabled>Out of Stock</button>
+                @else
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                @endif
               </div>
             </form>
 
