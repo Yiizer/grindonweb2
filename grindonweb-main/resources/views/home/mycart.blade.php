@@ -2,24 +2,23 @@
 <html>
 
 <head>
-  @include('home.css')
+    @include('home.css')
 
     <style type="text/css">
-
-        .div_deg{
+        .div_deg {
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 60px;
         }
 
-        table{
+        table {
             border: 2px solid black;
             text-align: center;
             width: 800px;
         }
-        
-        th{
+
+        th {
             border: 2px solid black;
             text-align: center;
             color: white;
@@ -28,140 +27,118 @@
             background-color: black;
         }
 
-        td{
+        td {
             border: 1px solid skyblue;
         }
 
-        .cart_value{
+        .cart_value {
             text-align: center;
             margin-bottom: 70px;
             padding: 18px;
         }
 
-        .order_deg{
+        .order_deg {
             padding-right: 100px;
             margin-top: -50px;
         }
-        label{
+
+        label {
             display: inline-block;
             width: 150px;
         }
 
-        .div_gap{
+        .div_gap {
             padding: 20px;
         }
-
     </style>
-
 </head>
 
 <body>
-  <div class="hero_area">
-    <!-- header section strats -->
-    @include('home.header')
-    <!-- end header section -->
-
-  </div>
-  <!-- end hero area -->
+    <div class="hero_area">
+        <!-- header section starts -->
+        @include('home.header')
+        <!-- end header section -->
+    </div>
+    <!-- end hero area -->
 
     <div class="div_deg">
-
-
         <div class="order_deg">
-
-            <form action="{{url('confirm_order')}}" method="POST">
+            <!-- The form to place the order -->
+            <form action="{{ url('confirm_order') }}" method="POST" id="orderForm">
                 @csrf
 
                 <div class="div_gap">
-
                     <label>Receiver Name</label>
-
-                    <input type="text" name="name" value="{{Auth::user()->name}}">
-
+                    <input type="text" name="name" value="{{ Auth::user()->name }}">
                 </div>
 
                 <div class="div_gap">
-
                     <label>Receiver Address</label>
-
-                    <textarea name="address">{{Auth::user()->address}}</textarea>
-
+                    <textarea name="address">{{ Auth::user()->address }}</textarea>
                 </div>
 
                 <div class="div_gap">
-
                     <label>Receiver Phone</label>
-
-                    <input type="text" name="phone" value="{{Auth::user()->phone}}">
-
+                    <input type="text" name="phone" value="{{ Auth::user()->phone }}">
                 </div>
 
                 <div class="div_gap">
-
-                    <input class="btn btn-primary" type="submit" value="Place Order">
-
+                    <!-- Place Order button triggers the confirmation dialog -->
+                    <input class="btn btn-primary" type="button" value="Place Order" onclick="confirmOrder()">
                 </div>
-
             </form>
-
         </div>
 
-
+        <!-- Cart table -->
         <table>
-
             <tr>
                 <th>Product Title</th>
-
                 <th>Price</th>
-
+                <th>Size</th>
+                <th>Color</th>
+                <th>Quantity</th>
                 <th>Image</th>
-
                 <th>Remove</th>
             </tr>
 
-            <?php
+            <?php $value = 0; ?>
 
-            $value = 0;
+            @foreach ($cart as $cart)
+                <tr>
+                    <td>{{ $cart->product->title }}</td>
+                    <td>{{ $cart->product->price }}</td>
+                    <td>{{ $cart->size }}</td>
+                    <td>{{ $cart->color }}</td>
+                    <td>{{ $cart->quantity }}</td>
+                    <td>
+                        <img width="150" src="/products/{{ $cart->product->image }}">
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="{{ url('delete_cart', $cart->id) }}">Remove</a>
+                    </td>
+                </tr>
 
-            ?>
-
-            @foreach($cart as $cart)
-
-            <tr>
-
-                <td>{{$cart->product->title}}</td>
-
-                <td>{{$cart->product->price}}</td>
-
-                <td>
-                    <img width="150" src="/products/{{$cart->product->image}}">
-                </td>
-
-                <td>
-                    <a class="btn btn-danger" href="{{url('delete_cart',$cart->id)}}">Remove</a>
-                </td>
-
-            </tr>
-
-            <?php
-
-            $value = $value + $cart->product->price;
-
-            ?>
-
+                <?php $value += $cart->product->price * $cart->quantity; ?>
             @endforeach
-
         </table>
-
     </div>
 
     <div class="cart_value">
-        <h3>Total Value of Cart is: PHP {{$value}}</h3>
+        <h3>Total Value of Cart is: PHP {{ $value }}</h3>
     </div>
 
+    <!-- JavaScript to show confirmation before submitting the order -->
+    <script type="text/javascript">
+        function confirmOrder() {
+            // Use JavaScript's confirm dialog
+            if (confirm("Are you sure you want to place your order?")) {
+                // If user confirms, submit the form
+                document.getElementById("orderForm").submit();
+            }
+        }
+    </script>
 
-  <!-- info section -->
-
+    <!-- info section -->
     @include('home.footer')
 </body>
 

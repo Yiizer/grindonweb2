@@ -45,7 +45,7 @@
           <div class="box">
 
             <div class="div_center">
-              <img width="400" src="/products/{{$data->image}}" alt="">
+              <img width="400" src="/products/{{$data->image}}" alt="Product Image">
             </div>
 
             <div class="detail-box">
@@ -68,10 +68,44 @@
               <p>{{ $data->description }}</p>
             </div>
 
-            <!-- Add to Cart Button -->
-            <div class="add-to-cart-btn">
-              <a class="btn btn-primary" href="{{ url('add_cart', $data->id) }}">Add to Cart</a>
-            </div>
+            <!-- Add to Cart Form -->
+            <form action="{{ route('add.cart', $data->id) }}" method="POST">
+              @csrf
+
+              <!-- Size selection -->
+              <div class="detail-box">
+                <label for="size">Size:</label>
+                <select name="size" id="size" required>
+                  <option value="Small" {{ old('size') == 'Small' ? 'selected' : '' }}>Small</option>
+                  <option value="Medium" {{ old('size') == 'Medium' ? 'selected' : '' }}>Medium</option>
+                  <option value="Large" {{ old('size') == 'Large' ? 'selected' : '' }}>Large</option>
+                </select>
+              </div>
+
+              <!-- Color selection -->
+              <div class="detail-box">
+                <label for="color">Color:</label>
+                <select name="color" id="color" required>
+                  <option value="Black" {{ old('color') == 'Black' ? 'selected' : '' }}>Black</option>
+                  <option value="White" {{ old('color') == 'White' ? 'selected' : '' }}>White</option>
+                </select>
+              </div>
+
+              <!-- Quantity selection -->
+              <div class="detail-box">
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $data->quantity }}" required>
+              </div>
+
+              <!-- Submit button -->
+              <div class="add-to-cart-btn">
+                @if ($data->quantity == 0)
+                    <button type="button" class="btn btn-danger" disabled>Out of Stock</button>
+                @else
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                @endif
+              </div>
+            </form>
 
           </div>
         </div>
