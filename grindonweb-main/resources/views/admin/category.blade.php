@@ -4,40 +4,40 @@
     @include('admin.css')
 
     <style type="text/css">
-
-        input[type='text']
-        {
+        input[type='text'] {
             width: 400px;
             height: 50px;
         }
 
-        .div_deg{
+        .div_deg {
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 30px;
         }
 
-        .table_deg{
+        .table_deg {
             text-align: center;
             margin: auto;
             border: 2px solid white;
             margin-top: 50px;
             width: 600px;
+            border-collapse: collapse; /* Ensures better alignment */
         }
-        th{
-            background-color: skyblue;
+
+        th {
+            background-color: black;
             padding: 15px;
             font-size: 20px;
             font-weight: bold;
             color: white;
         }
-        td{
+
+        td {
             color: white;
             padding: 10px;
-            border: 1px solid skyblue;
+            border: 1px solid white;
         }
-
     </style>
 
   </head>
@@ -73,11 +73,9 @@
                 <table class="table_deg">
 
                     <tr>
-                        <th>Category Name</th>
+                        <th colspan="3">Category Name</th>
 
-                        <th>Edit</th>
-
-                        <th>Delete</th>
+                    
                     </tr>
 
                     @foreach($data as $data)
