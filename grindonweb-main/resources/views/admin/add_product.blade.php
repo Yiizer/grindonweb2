@@ -1,133 +1,165 @@
 <!DOCTYPE html>
 <html>
-  <head> 
+<head>
     @include('admin.css')
 
     <style type="text/css">
+        body {
+            background-color: #2c2c2c; /* Dark background for contrast */
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
 
-        .div_deg{
+        .form-container {
+            width: 60%;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #3a3a3a;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #dddddd;
+        }
+
+        input[type='text'],
+        input[type='number'],
+        select,
+        textarea,
+        input[type='file'] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            background-color: #ffffff;
+            color: #333333;
+            font-size: 14px;
+        }
+
+        input[type='text']:focus,
+        input[type='number']:focus,
+        select:focus,
+        textarea:focus,
+        input[type='file']:focus {
+            outline: none;
+            border-color: #66afe9;
+            box-shadow: 0 0 8px rgba(102, 175, 233, 0.5);
+        }
+
+        .form-row-half {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 60px;
+            justify-content: space-between;
+            gap: 40px;
         }
 
-        h1{
-            color: white;
+        .form-row-half input {
+            width: 100px;
+            height: 50px; /* Increased height for larger input boxes */
+            font-size: 16px; /* Larger font for better visibility */
+            padding: 10px;
         }
 
-        label{
-            display: inline-block;
-            width: 200px;
-            font-size: 18px!important;
-            color: white!important;
+        textarea {
+            resize: none;
+            height: 100px;
         }
 
-        input[type='text']
-        {
-            width: 350px;
-            height:50px;
-        }
-
-        textarea{
-            width: 450px;
-            height: 80px;
-        }
-
-        .input_deg{
+        .btn {
+            display: block;
+            width: 100%;
             padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #28a745; /* Green */
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
         }
 
+        .btn:hover {
+            background-color: #218838;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
 
+        @media (max-width: 768px) {
+            .form-container {
+                width: 90%;
+            }
+
+            .form-row-half {
+                flex-direction: column;
+            }
+
+            .form-row-half input {
+                width: 100%;
+            }
+        }
     </style>
-
-
-  </head>
-  <body>
+</head>
+<body>
     @include('admin.header')
-    <!-- Sidebar Navigation-->
     @include('admin.sidebar')
-      <!-- Sidebar Navigation end-->
-      <div class="page-content">
-        <div class="page-header">
-          <div class="container-fluid">
-            
-          
-            <h1 >Add Product</h1>
 
-            <div class="div_deg">
-                
-                <form action="{{url('upload_product')}}" method="POST" enctype="multipart/form-data">
-
-                    @csrf
-
-                    <div class="input_deg">
-                        <label>Product Title</label>
-                        <input type="text" name="title" required>
-                    </div>
-
-                    <div class="input_deg">
-                        <label>Description</label>
-                        <textarea name="description" required></textarea>
-                    </div>
-
-                    <div class="input_deg">
+    <div class="page-content">
+        <div class="form-container">
+            <h1>Add Product</h1>
+            <form action="{{url('upload_product')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-row">
+                    <label>Product Title</label>
+                    <input type="text" name="title" required>
+                </div>
+                <div class="form-row">
+                    <label>Description</label>
+                    <textarea name="description" required></textarea>
+                </div>
+                <div class="form-row-half">
+                    <div>
                         <label>Price</label>
-                        <input type="number" name="price" step="1" min="0" max="100000" pattern="[0-9]+" title="Only numbers are allowed and up to a maximum of 100000" required>
+                        <input type="number" name="price" step="1" min="0" max="100000" pattern="[0-9]+" required>
                     </div>
-
-
-                    <div class="input_deg">
+                    <div>
                         <label>Quantity</label>
-                        <input type="number" name="qty" min="0" max="1000" pattern="[0-9]+" title="Only numbers are allowed and up to a maximum of 1000" required>
+                        <input type="number" name="qty" step="1" min="0" max="1000" pattern="[0-9]+" required>
                     </div>
-
-
-                    <div class="input_deg">
-                        <label>Product Category</label>
-
-
-                        <select name="category" required>
-
-
-                            <option>Select a Option</option>
-
-
-                            @foreach($category as $category)
-
-                            <option value="{{$category->category_name}}">{{$category->category_name}}</option>
-
-                            @endforeach
-
-                        </select>
-                    </div>
-
-                    <div class="input_deg">
-                        <label>Product Image</label>
-                        <input type="file" name="image">
-                    </div>
-
-                    <div class="input_deg">
-                        
-                        <input class="btn btn-success" type="submit" value="Add Product">
-                    </div>
-
-                </form>
-
-            </div>
-
-
+                </div>
+                <div class="form-row">
+                    <label>Product Category</label>
+                    <select name="category" required>
+                        <option value="">Select a Category</option>
+                        @foreach($category as $category)
+                        <option value="{{$category->category_name}}">{{$category->category_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label>Product Image</label>
+                    <input type="file" name="image">
+                </div>
+                <div class="form-row">
+                    <button class="btn" type="submit">Add Product</button>
+                </div>
+            </form>
         </div>
-      </div>
     </div>
-    <!-- JavaScript files-->
-    <script src="{{asset('admincss/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('admincss/vendor/popper.js/umd/popper.min.js')}}"> </script>
-    <script src="{{asset('admincss/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('admincss/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
-    <script src="{{asset('admincss/vendor/chart.js/Chart.min.js')}}"></script>
-    <script src="{{asset('admincss/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('admincss/js/charts-home.js')}}"></script>
-    <script src="{{asset('admincss/js/front.js')}}"></script>
-  </body>
+
+    @include('admin.js')
+</body>
 </html>
