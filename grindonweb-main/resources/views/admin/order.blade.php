@@ -157,46 +157,56 @@
                         <th>Color</th>
                         <th>Quantity</th>
                         <th>Image</th>
-                        <th>Payment Status</th>
+                        <th>Payment Method</th>
                         <th>Status</th>
                         <th>Change Status</th>
                         <th>Print PDF</th>
                     </tr>
                 </thead>
                 <tbody>
-    @foreach($data as $order)
-    <tr>
-        <td>{{ $order->name }}</td>
-        <td>{{ $order->rec_address }}</td>
-        <td>{{ $order->phone }}</td>
-        <td>{{ $order->product->title }}</td>
-        <!-- Calculate and display total price -->
-        <td>${{ number_format($order->product->price * $order->quantity, 2) }}</td>
-        <td>{{ $order->size }}</td>
-        <td>{{ $order->color }}</td>
-        <td>{{ $order->quantity }}</td>
-        <td>
-            <img src="products/{{ $order->product->image }}" alt="Product Image">
-        </td>
-        <td>{{ $order->payment_status }}</td>
-        <td>
-            @if($order->status == 'in progress')
-            <span style="color:red">{{ $order->status }}</span>
-            @elseif($order->status == 'On the Way')
-            <span style="color:skyblue">{{ $order->status }}</span>
-            @else
-            <span style="color:green">{{ $order->status }}</span>
-            @endif
-        </td>
-        <td>
-            <a class="btn btn-primary" href="{{ url('on_the_way', $order->id) }}">On The Way</a>
-            <a class="btn btn-success" href="{{ url('delivered', $order->id) }}">Delivered</a>
-        </td>
-        <td>
-            <a class="btn btn-secondary" href="{{ url('print_pdf', $order->id) }}">Print PDF</a>
-        </td>
-    </tr>
-    @endforeach
+                @foreach($data as $order)
+                    <tr>
+                        <td>{{ $order->name }}</td>
+                        <td>{{ $order->rec_address }}</td>
+                        <td>{{ $order->phone }}</td>
+                        <td>{{ $order->product->title }}</td>
+                        <!-- Calculate and display total price -->
+                        <td>${{ number_format($order->product->price * $order->quantity, 2) }}</td>
+                        <td>{{ $order->size }}</td>
+                        <td>{{ $order->color }}</td>
+                        <td>{{ $order->quantity }}</td>
+                        <td>
+                            <img src="products/{{ $order->product->image }}" alt="Product Image">
+                        </td>
+                        <td>{{ $order->payment_method }}</td>
+                        <td>
+                            @if($order->payment_method == 'gcash' && $order->reference_number)
+                                <strong>Reference Number:</strong> {{ $order->reference_number }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        <td>
+                            @if($order->status == 'in progress')
+                            <span style="color:red">{{ $order->status }}</span>
+                            @elseif($order->status == 'On the Way')
+                            <span style="color:skyblue">{{ $order->status }}</span>
+                            @else
+                            <span style="color:green">{{ $order->status }}</span>
+                            @endif
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ url('on_the_way', $order->id) }}">On The Way</a>
+                            <a class="btn btn-success" href="{{ url('delivered', $order->id) }}">Delivered</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary" href="{{ url('print_pdf', $order->id) }}">Print PDF</a>
+                        </td>
+                    </tr>
+                @endforeach
+
+                
+
 </tbody>
             </table>
         </div>
