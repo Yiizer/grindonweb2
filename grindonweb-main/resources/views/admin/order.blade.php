@@ -23,7 +23,7 @@
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 20px;
-            color: #333333;
+            color: white;
         }
 
         table {

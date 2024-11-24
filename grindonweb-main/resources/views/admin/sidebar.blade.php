@@ -9,7 +9,7 @@
             <p>Web Designer</p>
           </div>
         </div>
-        <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+        <!-- Sidebar Navidation Menus--><span class="heading" style="color: white;">Main</span>
         <ul class="list-unstyled">
                 <li><a href="{{url('admin/dashboard')}}"> <i class="icon-home"></i>Home </a></li>
                 <li>
@@ -26,6 +26,10 @@
 
                 <li>
                     <a href="{{url('view_orders')}}"> <i class="icon-grid"></i>Orders </a>
+                </li>
+
+                <li>
+                    <a href="{{ url('admin/messages') }}"> <i class="fa fa-envelope"></i>Messages </a>
                 </li>
                 
         </ul>

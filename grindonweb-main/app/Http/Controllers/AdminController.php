@@ -221,4 +221,12 @@ class AdminController extends Controller
     
         return $pdf->download('invoice.pdf');
     }
+
+    public function messages()
+    {
+        $messages = \App\Models\Contact::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('admin.messages', compact('messages'));
+    }
+
 }
