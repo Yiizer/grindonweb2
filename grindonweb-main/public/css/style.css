@@ -872,5 +872,32 @@ a:focus {
   color: #cbc9c9;
 }
 
+/* User Icon and Name */
+.user-info-container {
+  position: absolute;
+  top: 78%;
+  right: 220px; /* Pushes the user info to the extreme left */
+  transform: translateY(-50%);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info .user-name {
+  color: white; /* Change text color to white */
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Adjust Navbar Brand (Logo) */
+.navbar-brand {
+  margin-left: 70px; /* Prevents logo from overlapping with the user info */
+}
+
+
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */
