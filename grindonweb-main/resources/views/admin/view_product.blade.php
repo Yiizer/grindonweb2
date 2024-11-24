@@ -18,7 +18,7 @@
     }
 
     th{
-        background-color: skyblue;
+        background-color: black;
         color: white;
         font-size: 19px;
         font-weight: bold;

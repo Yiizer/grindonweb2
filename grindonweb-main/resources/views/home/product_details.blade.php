@@ -34,7 +34,7 @@
         .heading_container h2 {
             font-size: 36px;
             font-weight: 700;
-            color: #fff; /* White color for headings */
+            color: black; /* White color for headings */
             margin-bottom: 10px;
             text-transform: uppercase;
         }
@@ -72,6 +72,52 @@
             transform: scale(1.05);
             transition: transform 0.3s ease-in-out;
         }
+        /* Modal Styles */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling */
+            background-color: rgba(0, 0, 0, 0.9); /* Black background with transparency */
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 1100;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+        }
+
+        /* Hide the header while modal is active */
+        body.modal-open .hero_area {
+            display: none;
+        }
+
 
         /* Product Details */
         .product-details {
@@ -95,7 +141,7 @@
         .product-details .category,
         .product-details .quantity {
             font-size: 18px;
-            color: #bbb; /* Light gray for secondary text */
+            color: black; /* Light gray for secondary text */
             margin-top: 12px;
         }
 
@@ -202,7 +248,7 @@
             <div class="product-detail-card">
                 <!-- Product Image -->
                 <div class="product-image">
-                    <img src="/products/{{$data->image}}" alt="{{ $data->title }}">
+                    <img src="/products/{{$data->image}}" alt="{{ $data->title }}" id="productImage">
                 </div>
 
                 <!-- Product Details -->
@@ -259,9 +305,46 @@
             </div>
         </div>
     </section>
+
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
     <!-- Product Details Section End -->
 
     @include('home.footer')
+
+    <script>
+    // Get modal elements
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const productImage = document.getElementById('productImage');
+    const closeModal = document.querySelector('.close-modal');
+    const body = document.body;
+
+    // Open the modal when the product image is clicked
+    productImage.addEventListener('click', () => {
+        modal.style.display = 'block';
+        modalImage.src = productImage.src;
+        body.classList.add('modal-open'); // Hide the header
+    });
+
+    // Close the modal when the close button is clicked
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+        body.classList.remove('modal-open'); // Show the header
+    });
+
+    // Close the modal when clicking outside the modal image
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            body.classList.remove('modal-open'); // Show the header
+        }
+    });
+</script>
+
+
 </body>
 
 </html>

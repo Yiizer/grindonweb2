@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminMessageController;
 
 route::get('/', [HomeController::class, 'home'])->name('home');
 
@@ -51,3 +53,10 @@ route::get('shop', [HomeController::class, 'shop']);
 route::get('why', [HomeController::class, 'why']);
 route::get('testimonial', [HomeController::class, 'testimonial']);
 route::get('contact', [HomeController::class, 'contact']);
+
+// Contact Routes
+
+Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
+Route::get('/admin/messages', [AdminController::class, 'messages'])->name('admin.messages')->middleware('auth');
+Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
+Route::get('admin/messages', [AdminMessageController::class, 'index'])->name('admin.messages');
