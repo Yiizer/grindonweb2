@@ -140,6 +140,35 @@
             font-size: 18px;
             color: #666;
         }
+
+        /* Gcash Modal Style */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -172,7 +201,19 @@
                 </div>
 
                 <div class="div_gap">
-                    <input class="btn" type="button" value="Place Order" onclick="confirmOrder()">
+                    <input class="btn" type="button" value="Place Order" onclick="confirm_order()">
+                </div>
+
+                <div class="div_gap">
+                    <label>Select Payment Method:</label>
+                    <div>
+                        <input type="radio" id="cash_on_delivery" name="payment_method" value="cash_on_delivery">
+                        <label for="cash_on_delivery">Cash on Delivery</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="gcash" name="payment_method" value="gcash">
+                        <label for="gcash">GCash</label>
+                    </div>
                 </div>
             </form>
         </div>
@@ -241,44 +282,84 @@
         @endif
     </div>
 
-    <script type="text/javascript">
-        function confirmOrder() {
-            // Check if at least one checkbox is selected
-            const checkboxes = document.querySelectorAll('.item-checkbox');
-            let isChecked = false;
+   <!-- Gcash Payment Modal -->
+<div id="gcash-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h3>Gcash Payment Details</h3>
+        <p>Please transfer the amount to the following Gcash details:</p>
+        <p><strong>Account Number:</strong> 0917-xxxx-xxxx</p>
+        <p><strong>Account Name:</strong> Your Company Name</p>
+        <p><strong>Amount:</strong> $<span id="gcash-amount"></span></p>
+        <label for="reference_number">Reference Number:</label>
+        <input type="text" id="reference_number" name="reference_number" placeholder="Enter reference number">
+        <div class="div_gap">
+            <input class="btn" type="button" value="Confirm Payment" onclick="submitOrder()">
+        </div>
+    </div>
+</div>
 
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    isChecked = true;
-                }
-            });
+<script type="text/javascript">
+   function confirm_order() {
+    const paymentMethodInput = document.querySelector('input[name="payment_method"]:checked');
 
-            if (!isChecked) {
-                alert("You must select at least one product to place the order.");
-                return;
+    if (!paymentMethodInput) {
+        alert("Please select a payment method.");
+        return;
+    }
+
+    const paymentMethod = paymentMethodInput.value;
+
+    if (paymentMethod === "gcash") {
+        const totalAmount = parseFloat(document.getElementById('total-price').textContent.replace('$', ''));
+        document.getElementById('gcash-amount').textContent = totalAmount.toFixed(2);
+        document.getElementById('gcash-modal').style.display = "flex";
+        return;
+    }
+
+    if (confirm("Are you sure you want to place your order?")) {
+        document.getElementById("orderForm").submit();
+    }
+}
+
+function submitOrder() {
+    const referenceNumber = document.getElementById('reference_number').value.trim();
+
+    if (!referenceNumber) {
+        alert("Please enter the reference number.");
+        return;
+    }
+
+    const referenceInput = document.createElement("input");
+    referenceInput.type = "hidden";
+    referenceInput.name = "reference_number";
+    referenceInput.value = referenceNumber;
+    document.getElementById("orderForm").appendChild(referenceInput);
+
+    closeModal();
+    document.getElementById("orderForm").submit();
+}
+
+    function closeModal() {
+        document.getElementById('gcash-modal').style.display = "none";
+    }
+
+    function updateTotal() {
+        let total = 0;
+        // Get all checked checkboxes and update the total
+        const checkboxes = document.querySelectorAll('.item-checkbox');
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                const price = parseFloat(checkbox.getAttribute('data-price'));
+                const quantity = parseInt(checkbox.getAttribute('data-quantity'));
+                total += price * quantity;
             }
+        });
+        // Update the total value in the DOM
+        document.getElementById('total-price').textContent = '$' + total.toFixed(2);
+    }
+</script>
 
-            // Proceed with form submission if a product is selected
-            if (confirm("Are you sure you want to place your order?")) {
-                document.getElementById("orderForm").submit();
-            }
-        }
-
-        function updateTotal() {
-            let total = 0;
-            // Get all checked checkboxes and update the total
-            const checkboxes = document.querySelectorAll('.item-checkbox');
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    const price = parseFloat(checkbox.getAttribute('data-price'));
-                    const quantity = parseInt(checkbox.getAttribute('data-quantity'));
-                    total += price * quantity;
-                }
-            });
-            // Update the total value in the DOM
-            document.getElementById('total-price').textContent = '$' + total.toFixed(2);
-        }
-    </script>
 
     @include('home.footer')
 </body>

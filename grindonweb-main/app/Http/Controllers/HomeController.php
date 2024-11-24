@@ -173,50 +173,78 @@ class HomeController extends Controller
 
         return redirect()->back();
     }
-
-   public function confirm_order(Request $request)
-{
-    DB::beginTransaction();
-
-    try {
-        $name = $request->name;
-        $address = $request->address;
-        $phone = $request->phone;
-        $userid = Auth::user()->id;
-        $cart = Cart::where('user_id', $userid)->get();
-
-        foreach ($cart as $carts) {
-            // Create the order
-            $order = new Order;
-            $order->product_id = $carts->product_id;
-            $order->name = $name;
-            $order->rec_address = $address;
-            $order->phone = $phone;
-            $order->user_id = $userid;
-            $order->size = $carts->size;
-            $order->color = $carts->color;
-            $order->quantity = $carts->quantity;
-            $order->status = 'in progress'; // Default status
-            $order->save();
-
-            // Deduct product stock
-            $product = Product::find($carts->product_id);
-            $product->quantity -= $carts->quantity;
-            $product->save();
+    public function confirm_order(Request $request)
+    {
+        // Ensure a payment method is selected
+        if (!$request->has('payment_method')) {
+            return redirect()->back()->with('error', 'Please select a payment method.');
         }
-
-        // Clear the cart after order confirmation
-        Cart::where('user_id', $userid)->delete();
-
-        DB::commit();
-        
-        toastr()->timeOut(10000)->closeButton()->addSuccess('Product Ordered Successfully');
-        return redirect()->back();
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return redirect()->back()->with('error', 'Order failed: ' . $e->getMessage());
+    
+        $paymentMethod = $request->payment_method;
+        $referenceNumber = $request->reference_number; // Reference number for GCash, may be null for other methods
+    
+        // Validation: Check if reference number is provided for GCash
+        if ($paymentMethod === 'gcash' && empty($referenceNumber)) {
+            return redirect()->back()->with('error', 'Please provide a reference number for GCash payment.');
+        }
+    
+        // Begin the transaction to ensure atomic operations
+        DB::beginTransaction();
+    
+        try {
+            $name = $request->name;
+            $address = $request->address;
+            $phone = $request->phone;
+            $userid = Auth::user()->id;
+            $cart = Cart::where('user_id', $userid)->get();
+    
+            foreach ($cart as $carts) {
+                // Create the order and save payment method
+                $order = new Order;
+                $order->product_id = $carts->product_id;
+                $order->name = $name;
+                $order->rec_address = $address;
+                $order->phone = $phone;
+                $order->user_id = $userid;
+                $order->size = $carts->size;
+                $order->color = $carts->color;
+                $order->quantity = $carts->quantity;
+                $order->status = 'in progress'; // Default status
+    
+                // Save selected payment method
+                $order->payment_method = $paymentMethod;
+    
+                // If GCash is selected, save the reference number
+                if ($paymentMethod === 'gcash') {
+                    $order->reference_number = $referenceNumber; // Save the reference number if Gcash
+                }
+    
+                $order->save();
+    
+                // Deduct product stock after order creation
+                $product = Product::find($carts->product_id);
+                $product->quantity -= $carts->quantity;
+                $product->save();
+            }
+    
+            // Clear the cart after the order is confirmed
+            Cart::where('user_id', $userid)->delete();
+    
+            // Commit the transaction
+            DB::commit();
+    
+            // Show success message
+            toastr()->timeOut(10000)->closeButton()->addSuccess('Product Ordered Successfully');
+            return redirect('/'); // Optionally redirect to a success page
+        } catch (\Exception $e) {
+            // Rollback in case of failure
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Order failed: ' . $e->getMessage());
+        }
     }
-}
+    
+    
+    
 
     public function myorders()
     {
