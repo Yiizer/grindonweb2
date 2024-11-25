@@ -67,17 +67,39 @@
             border-radius: 5px;
         }
 
+        /* General Button Styles (inherits from .btn) */
         .btn {
-            background-color: #333;
-            color: white;
-            padding: 10px 15px;
-            border: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            color: #fff; /* White text initially */
+            background-color: #000; /* Black background */
+            border: 2px solid #000; /* Match border with initial background */
+            border-radius: 8px;
             cursor: pointer;
-            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hover Effect for Button */
+        .btn:hover {
+            background-color: #fff; /* White background on hover */
+            color: #000; /* Black text on hover */
+            border: 2px solid #000;
+        }
+
+        /* Specific Style for 'Place Order' Button */
+        .btn-place-order {
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Extra shadow for 'Place Order' */
+        }
+
+        /* Hover Effect for 'Place Order' Button */
+        .btn-place-order:hover {
+            background-color: #fff; /* Matches the general hover effect */
+            color: #000; 
         }
 
         .btn-danger {
-            background-color: #e74c3c;
+            background-color: red;
         }
 
         .div_center {
@@ -201,7 +223,7 @@
                 </div>
 
                 <div class="div_gap">
-                    <input class="btn" type="button" value="Place Order" onclick="confirm_order()">
+                    <input class="btn btn-place-order" type="button" value="Place Order" onclick="confirm_order()">
                 </div>
 
                 <div class="div_gap">
@@ -243,7 +265,7 @@
                                     <input type="checkbox" class="item-checkbox" data-price="{{ $cart->product->price }}" data-quantity="{{ $cart->quantity }}" checked onclick="updateTotal()">
                                 </td>
                                 <td>{{ $cart->product->title }}</td>
-                                <td>${{ number_format($cart->product->price, 2) }}</td>
+                                <td>PHP {{ number_format($cart->product->price, 2) }}</td>
                                 <td>{{ $cart->size }}</td>
                                 <td>{{ $cart->color }}</td>
                                 <td>{{ $cart->quantity }}</td>
@@ -270,7 +292,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td id="total-price">${{ number_format($total, 2) }}</td>
+                            <td id="total-price">PHP {{ number_format($total, 2) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -290,7 +312,7 @@
         <p>Please transfer the amount to the following Gcash details:</p>
         <p><strong>Account Number:</strong> 0917-xxxx-xxxx</p>
         <p><strong>Account Name:</strong> Your Company Name</p>
-        <p><strong>Amount:</strong> $<span id="gcash-amount"></span></p>
+        <p><strong>Amount:</strong> PHP <span id="gcash-amount"></span></p>
         <label for="reference_number">Reference Number:</label>
         <input type="text" id="reference_number" name="reference_number" placeholder="Enter reference number">
         <div class="div_gap">
@@ -311,7 +333,7 @@
     const paymentMethod = paymentMethodInput.value;
 
     if (paymentMethod === "gcash") {
-        const totalAmount = parseFloat(document.getElementById('total-price').textContent.replace('$', ''));
+        const totalAmount = parseFloat(document.getElementById('total-price').textContent.replace('PHP', ''));
         document.getElementById('gcash-amount').textContent = totalAmount.toFixed(2);
         document.getElementById('gcash-modal').style.display = "flex";
         return;
@@ -356,7 +378,7 @@ function submitOrder() {
             }
         });
         // Update the total value in the DOM
-        document.getElementById('total-price').textContent = '$' + total.toFixed(2);
+        document.getElementById('total-price').textContent = 'PHP' + total.toFixed(2);
     }
 </script>
 
