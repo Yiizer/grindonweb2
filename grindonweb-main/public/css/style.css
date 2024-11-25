@@ -898,6 +898,48 @@ a:focus {
   margin-left: 70px; /* Prevents logo from overlapping with the user info */
 }
 
+/* Sidebar Background */
+#sidebar {
+  background: #222 !important; /* Black background */
+  color: #fff !important; /* White text */
+}
+
+/* Sidebar Header Styling */
+.sidebar-header {
+  background-color: #222 !important; /* Dark gray */
+  border-bottom: 1px solid #444 !important; /* Medium gray border */
+}
+
+/* Sidebar Heading */
+#sidebar .heading {
+  color: #fff !important; /* White heading */
+}
+
+/* Sidebar Menu Items */
+#sidebar ul li a {
+  color: #ccc !important; /* Light gray text */
+  padding: 10px 20px;
+  display: block;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+#sidebar ul li a:hover {
+  background: #333 !important; /* Darker gray on hover */
+  color: #fff !important; /* White text on hover */
+}
+
+/* Active Link */
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+  background: #444 !important; /* Medium gray for active link */
+  color: #fff !important;
+}
+
+/* Sidebar Icons */
+#sidebar i {
+  color: #ccc !important; /* Light gray icons */
+}
+
 
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */
