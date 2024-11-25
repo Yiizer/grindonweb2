@@ -122,7 +122,7 @@
                 Fast Delivery
               </h5>
               <p>
-                variations of passages of Lorem Ipsum available
+                Get your order delivered to your doorstep in record time!
               </p>
             </div>
           </div>
@@ -237,7 +237,7 @@
                 Free Shiping
               </h5>
               <p>
-                variations of passages of Lorem Ipsum available
+                Shop more, worry less—shipping is on us!
               </p>
             </div>
           </div>
@@ -258,7 +258,7 @@
                 Best Quality
               </h5>
               <p>
-                variations of passages of Lorem Ipsum available
+                We ensure premium quality in every product we deliver.
               </p>
             </div>
           </div>

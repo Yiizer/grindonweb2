@@ -16,18 +16,16 @@
             </div>
             <div class="detail-box" style="padding: 15px;">
               <h6>{{ $products->title }}</h6>
-              <h6>Price
+              <h6>Price:
                 <span>
-                  {{ $products->price }}
+                  PHP {{ $products->price }}
                 </span>
               </h6>
             </div>
           </div>
         </a>
         <!-- "Add to Cart" button remains functional -->
-        <div style="padding: 15px; text-align: center;">
-          <a class="btn btn-primary" href="{{ url('add_cart', $products->id) }}">Add to Cart</a>
-        </div>
+        
       </div>
       @endforeach
     </div>
