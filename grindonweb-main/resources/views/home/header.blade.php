@@ -85,7 +85,7 @@
         border-radius: 5px; /* Rounded corners */
         transition: all 0.3s ease; /* Smooth transition for hover effect */
         margin-top: 5px; /* Adjust the button downwards */
-        margin-left: -10px !important; /* Adjust the button to the left */
+        margin-left: -10px; /* Adjust the button to the left */
         position: relative; /* Relative positioning for fine control */
     }
 

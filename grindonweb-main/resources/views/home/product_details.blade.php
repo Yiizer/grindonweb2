@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4; /* Light gray for the page background */
-            color: #333; /* Dark text color */
+            color: black; /* Dark text color */
         }
 
         .hero_area {
@@ -33,7 +33,7 @@
 
         .heading_container h2 {
             font-size: 36px;
-            font-weight: 700;
+            font-weight: 800;
             color: black; /* White color for headings */
             margin-bottom: 10px;
             text-transform: uppercase;
@@ -94,7 +94,8 @@
             max-height: 90%;
             border-radius: 10px;
             box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
-        }
+            object-fit: contain; /* Ensures the image maintains its aspect ratio */
+        }   
 
         .close-modal {
             position: absolute;
@@ -181,23 +182,29 @@
         .btn {
             padding: 14px 35px;
             font-size: 18px;
-            color: #fff; /* White text for buttons */
-            background-color: #555; /* Dark button background */
-            border: none;
+            color: #fff; /* White text initially */
+            background-color: #000; /* Black background */
+            border: 2px solid #000; /* Match border with initial background */
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Smooth color transitions */
             box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .btn:hover {
-            background-color: #444; /* Slightly darker button color on hover */
+            background-color: #fff; /* White background on hover */
+            color: #000; /* Black text on hover */
+            border: 2px solid #000; /* Add border to maintain design consistency */
         }
 
+        /* Out of Stock Button */
         .btn-danger {
-            background-color: #e74c3c; /* Red button for out of stock */
+            background-color: #e74c3c; /* Red background for out of stock */
+            color: #fff;
             cursor: not-allowed;
+            box-shadow: none; /* Remove shadow for disabled buttons */
         }
+
 
         /* Responsive Design */
         @media (max-width: 768px) {
