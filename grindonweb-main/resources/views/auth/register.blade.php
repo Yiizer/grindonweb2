@@ -40,7 +40,33 @@
     .already-registered-link:hover {
       color: black; /* No hover effect */
     }
+
+    /* Back button styles */
+    .back-button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      transition: transform 0.3s ease; /* Hover effect to slightly enlarge */
+    }
+
+    .back-button:hover {
+      transform: scale(1.1); /* Slightly enlarge on hover */
+    }
+
+    /* Font Awesome back icon styles */
+    .back-icon {
+      font-size: 24px;
+      color: black;
+    }
+
+    .back-icon:hover {
+      color: gray;
+    }
   </style>
+
+  <!-- Include Font Awesome for the back icon -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -93,6 +119,14 @@
           <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="custom-input-label"/>
           <x-text-input id="password_confirmation" class="block mt-1 w-full custom-text-input" type="password" name="password_confirmation" required autocomplete="new-password" />
           <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <!-- Back Button (Icon) below the confirm password field -->
+        <div class="flex justify-start mt-4">
+            <button onclick="window.location.href='{{ url('/') }}'" class="back-button">
+                <!-- Back Icon using Font Awesome -->
+                <i class="fas fa-arrow-left back-icon"></i>
+            </button>
         </div>
 
         <!-- Submit -->

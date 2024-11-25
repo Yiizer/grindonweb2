@@ -4,6 +4,7 @@
 <head>
   @include('home.css')
   <style>
+    /* Styling for the form inputs and buttons */
     .custom-text-input {
         background-color: white !important;
         color: black !important; /* Ensure text inside is visible on white background */
@@ -35,8 +36,33 @@
     body {
         background-color: #696969; /* Optional: Match the background color in your image */
     }
-</style>
 
+    /* Styling for the back button */
+    .back-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        transition: transform 0.3s ease; /* Hover effect to slightly enlarge */
+    }
+
+    .back-button:hover {
+        transform: scale(1.1); /* Slightly enlarge on hover */
+    }
+
+    /* Font Awesome icon style */
+    .back-icon {
+        font-size: 24px; /* Adjust size */
+        color: black; /* Icon color */
+    }
+
+    .back-icon:hover {
+        color: gray; /* Slight change in color on hover */
+    }
+  </style>
+
+  <!-- Include Font Awesome for the back icon -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -89,6 +115,15 @@
             </button>
         </div>
     </form>
+
+    <!-- Back Button (Icon) -->
+    <div class="mt-4">
+        <button onclick="window.location.href='{{ url('/') }}'" class="back-button">
+            <!-- Back Icon using Font Awesome -->
+            <i class="fas fa-arrow-left back-icon"></i>
+        </button>
+    </div>
+
     </x-guest-layout>
 
   </div>
