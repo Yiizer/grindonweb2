@@ -40,6 +40,8 @@ route::get('view_orders', [AdminController::class, 'view_orders'])->middleware([
 route::get('on_the_way/{id}', [AdminController::class, 'on_the_way'])->middleware(['auth', 'admin']);
 route::get('delivered/{id}', [AdminController::class, 'delivered'])->middleware(['auth', 'admin']);
 route::get('print_pdf/{id}', [AdminController::class, 'print_pdf'])->middleware(['auth', 'admin']);
+Route::get('/completed_orders', [AdminController::class, 'completed_orders'])->name('completed_orders');
+
 
 // Product and Cart routes
 route::get('product_details/{id}', [HomeController::class, 'product_details']);
