@@ -29,6 +29,10 @@
                 </li>
 
                 <li>
+                  <a href="{{url('completed_orders')}}"> <i class="icon-check"></i>Completed Orders </a>
+              </li> 
+
+                <li>
                     <a href="{{ url('admin/messages') }}"> <i class="fa fa-envelope"></i>Messages </a>
                 </li>
                 

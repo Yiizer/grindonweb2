@@ -69,22 +69,6 @@
             transition: background-color 0.3s ease;
         }
 
-        .btn-primary {
-            background-color: #555555;
-        }
-
-        .btn-primary:hover {
-            background-color: #333333;
-        }
-
-        .btn-success {
-            background-color: #7d7d7d;
-        }
-
-        .btn-success:hover {
-            background-color: #555555;
-        }
-
         .btn-secondary {
             background-color: #a1a1a1;
         }
@@ -97,16 +81,6 @@
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 14px;
-        }
-
-        td span[style="color:red"] {
-            background-color: #f2f2f2;
-            color: #333333;
-        }
-
-        td span[style="color:skyblue"] {
-            background-color: #e8e8e8;
-            color: #333333;
         }
 
         td span[style="color:green"] {
@@ -140,7 +114,7 @@
 
     <div class="page-content">
         <div class="page-header">
-            <h3>Orders</h3>
+            <h3>Completed Orders</h3>
         </div>
 
         <div class="table-responsive">
@@ -158,7 +132,6 @@
                         <th>Image</th>
                         <th>Payment Method</th>
                         <th>Status</th>
-                        <th>Change Status</th>
                         <th>Print PDF</th>
                     </tr>
                 </thead>
@@ -177,17 +150,7 @@
                                 <img src="products/{{ $order->product->image }}" alt="Product Image">
                             </td>
                             <td>{{ $order->payment_method }}</td>
-                            <td>
-                                @if($order->status == 'in progress')
-                                <span style="color:red">{{ $order->status }}</span>
-                                @elseif($order->status == 'On the Way')
-                                <span style="color:skyblue">{{ $order->status }}</span>
-                                @endif
-                            </td>
-                            <td>
-                                <a class="btn btn-primary" href="{{ url('on_the_way', $order->id) }}">On The Way</a>
-                                <a class="btn btn-success" href="{{ url('delivered', $order->id) }}">Delivered</a>
-                            </td>
+                            <td><span style="color:green">{{ $order->status }}</span></td>
                             <td>
                                 <a class="btn btn-secondary" href="{{ url('print_pdf', $order->id) }}">Print PDF</a>
                             </td>

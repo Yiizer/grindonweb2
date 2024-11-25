@@ -205,8 +205,9 @@ class AdminController extends Controller
     public function view_orders()
 {
     // Fetch all orders along with the associated product (with size, color, and quantity)
-    $data = Order::with('product')->get(); 
+    $data = Order::where('status', '!=', 'Delivered')->get();
 
+    // Pass data to the view
     return view('admin.order', compact('data'));
 }
 
@@ -224,16 +225,19 @@ class AdminController extends Controller
 
     public function delivered($id)
     {
+        // Find the order by its ID
         $data = Order::find($id);
-
-        $data->status = 'Delivered';
-
-        $data->save();
-
-        return redirect('/view_orders');
-
+    
+        if ($data) {
+            // Update the status to 'Delivered'
+            $data->status = 'Delivered';
+            $data->save();
+        }
+    
+        // Redirect to the orders view
+        return redirect('/view_orders')->with('success', 'Order marked as delivered!');
     }
-
+    
     public function print_pdf($id)
     {
         $data = Order::find($id);
@@ -249,6 +253,15 @@ class AdminController extends Controller
         $messages = \App\Models\Contact::orderBy('created_at', 'desc')->paginate(10);
 
         return view('admin.messages', compact('messages'));
+    }
+
+        public function completed_orders()
+    {
+        // Fetch completed orders from the database
+        $data = Order::where('status', 'Delivered')->get();
+
+        // Pass data to the view
+        return view('admin.completed_orders', compact('data'));
     }
 
 }
