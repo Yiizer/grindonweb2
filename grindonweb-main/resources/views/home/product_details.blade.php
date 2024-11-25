@@ -261,7 +261,7 @@
                     <p class="category"><strong>Category:</strong> {{ $data->category }}</p>
                     <p class="quantity"><strong>Available Quantity:</strong> {{ $data->quantity }}</p>
 
-                    <div class="price">$ {{ number_format($data->price, 2) }}</div>
+                    <div class="price">PHP {{ number_format($data->price, 2) }}</div>
 
                     <!-- Add to Cart Form -->
                     <form action="{{ route('add.cart', $data->id) }}" method="POST">

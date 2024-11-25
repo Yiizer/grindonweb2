@@ -8,14 +8,14 @@
                   <div class="col-md-7">
                     <div class="detail-box"> 
                       <h1>
-                        Welcome To Our <br>
-                        Gift Shop
+                        Design Your <br> Teamwear <br>
+                        With Us
                       </h1>
                       <p>
-                        Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis.
+                      We deliver affordable, premium and innovative Esports jerseys and sportswear, bringing your custom designs to life with top-tier craftsmanship.
                       </p>
-                      <a href="">
-                        Contact Us
+                      <a href="{{ url('shop') }}">
+                        Shop Now
                       </a>
                     </div>
                   </div>

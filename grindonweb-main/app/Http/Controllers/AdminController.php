@@ -102,6 +102,7 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
+    
     public function view_product()
     {
         $product = Product::paginate(3);
@@ -110,23 +111,44 @@ class AdminController extends Controller
     }
 
     public function delete_product($id)
-    {
-        $data = Product::find($id);
+{
+    $data = Product::find($id);
 
-        $image_path = public_path('products/'.$data->image);
+    if ($data) {
+        // Check if images exist and handle deletion
+        $images = json_decode($data->images); // If you store multiple images as JSON
+        if ($images && is_array($images)) {
+            foreach ($images as $image) {
+                $image_path = public_path('products/' . $image);
 
-        if(file_exists($image_path))
-        {
-            unlink($image_path);
+                if (is_file($image_path)) {
+                    unlink($image_path);
+                } else {
+                    \Log::error("File not found or not valid: " . $image_path);
+                }
+            }
+        } elseif (!empty($data->image)) {
+            // Fallback for single image handling (if `image` is not JSON)
+            $image_path = public_path('products/' . $data->image);
+
+            if (is_file($image_path)) {
+                unlink($image_path);
+            } else {
+                \Log::error("File not found or not valid: " . $image_path);
+            }
         }
 
+        // Delete the product record from the database
         $data->delete();
 
-        toastr()->timeOut(10000)->closeButton()->addSuccess('Product Deleted Succesfully');
-
-        return redirect()->back();
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Product Deleted Successfully');
+    } else {
+        toastr()->error('Product not found!');
     }
-    
+
+    return redirect()->back();
+}
+
     public function product_search(Request $request)
     {
         $search = $request->search;

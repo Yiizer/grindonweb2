@@ -23,7 +23,7 @@
               ABOUT US
             </h6>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet,
+            Formed by passionate group of expert graphic designers who aim to provide quality and affordable Esports gears.
             </p>
           </div>
           <div class="col-md-6 col-lg-3">
@@ -33,7 +33,7 @@
               </h5>
               <form action="#">
                 <input type="email" placeholder="Enter your email">
-                <button>
+                <button style="background-color: black; color: white;">
                   Subscribe
                 </button>
               </form>
@@ -44,7 +44,7 @@
               NEED HELP
             </h6>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet,
+            If you're looking for assistance with your order, sizing, or need help choosing the perfect piece, we're here to make your shopping experience as smooth as possible. Our team is dedicated to providing personalized support, ensuring that you find exactly what you need to feel confident and stylish in our clothing. Don’t hesitate to reach out – we’re always here to help you look and feel your best!
             </p>
           </div>
           <div class="col-md-6 col-lg-3">
@@ -54,15 +54,15 @@
             <div class="info_link-box">
               <a href="">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span> Gb road 123 london Uk </span>
+                <span> San Jose del Monte, Philippines </span>
               </a>
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>+01 12345678901</span>
+                <span>0976 405 6887</span>
               </a>
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
-                <span> demo@gmail.com</span>
+                <span> grindph.official@gmail.com</span>
               </a>
             </div>
           </div>
