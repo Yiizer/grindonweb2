@@ -1,4 +1,6 @@
 <div class="d-flex align-items-stretch">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
       
       <nav id="sidebar">
         <!-- Sidebar Header-->
