@@ -15,10 +15,13 @@
       <div class="navbar-header">
         <!-- Navbar Header-->
         <a href="{{url('admin/dashboard')}}" class="navbar-brand">
-          <div class="brand-text brand-big visible text-uppercase">
-            <strong class="text-primary">Grind</strong><strong>On</strong>
+          <div class="brand-image" id="logo-image">
+            <img src="{{asset('images/Logo/grindlogo.png')}}" alt="GrindOn Logo" width="150" height="auto">
           </div>
-          <div class="brand-text brand-sm"><strong class="text-primary">G</strong><strong>O</strong></div>
+
+          <div class="brand-image" id="logo-small-image">
+            <img src="{{ asset('images/Logo/Glogo.png') }}" alt="GO Logo" width="50" height="auto">
+          </div>
         </a>
         <!-- Sidebar Toggle Btn-->
         <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
@@ -54,5 +57,47 @@
     .btn-logout-icon:focus {
       outline: none; /* Remove focus outline */
     }
+
+    /* Initially, show the large logo for GRINDON */
+#logo-image {
+    display: block;
+}
+
+#logo-small-image {
+    display: none;
+}
+
+/* Optional: On smaller screens, hide the large logo and show the small one */
+@media (max-width: 768px) {
+    #logo-image {
+        display: none;
+    }
+    #logo-small-image {
+        display: block;
+    }
+}
+
+/* Optional: Smooth transition for logo fade */
+#logo-image, #logo-small-image {
+    transition: opacity 0.3s ease-in-out;
+}
+
   </style>
+
+<script>
+    // JavaScript function to toggle logo visibility
+    function toggleLogo() {
+        const logoImage = document.getElementById("logo-image");
+        const logoSmallImage = document.getElementById("logo-small-image");
+
+        // Toggle visibility of the large and small logos
+        if (logoImage.style.display === "none") {
+            logoImage.style.display = "block";
+            logoSmallImage.style.display = "none";
+        } else {
+            logoImage.style.display = "none";
+            logoSmallImage.style.display = "block";
+        }
+    }
+</script>
 </header>

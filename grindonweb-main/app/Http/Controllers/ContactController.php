@@ -26,8 +26,10 @@ class ContactController extends Controller
             'message' => $request->message,
         ]);
 
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Message has been Sent Successfully');
+
         // Redirect with a success message
-        return redirect()->back()->with('success', 'Your message has been sent successfully.');
+        return redirect()->back();
     }
 }
 

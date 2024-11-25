@@ -876,7 +876,7 @@ a:focus {
 .user-info-container {
   position: absolute;
   top: 78%;
-  right: 220px; /* Pushes the user info to the extreme left */
+  right: 220px !important; /* Pushes the user info to the extreme left */
   transform: translateY(-50%);
 }
 
@@ -889,7 +889,7 @@ a:focus {
 
 .user-info .user-name {
   color: white; /* Change text color to white */
-  font-size: 14px;
+  font-size: 14px !important;
   font-weight: bold;
 }
 

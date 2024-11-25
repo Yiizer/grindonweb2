@@ -55,7 +55,7 @@
                         </a>
                         <form style="padding: 15px" method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <input class="btn btn-success logout-btn" type="submit" value="Logout">
+                            <input class="logout-btn" type="submit" value="Logout">
                         </form>
                     @else
                         <a href="{{ url('/login') }}">
@@ -72,3 +72,25 @@
         </div>
     </nav>
 </header>
+
+<style>
+    .logout-btn {
+        background-color: black; /* White background */
+        color: white; /* Black text color */
+        border: 2px solid #000; /* Black border */
+        padding: 10px 20px; /* Padding for the button */
+        font-size: 14px; /* Font size */
+        text-transform: uppercase; /* Uppercase text */
+        cursor: pointer; /* Pointer cursor for hover effect */
+        border-radius: 5px; /* Rounded corners */
+        transition: all 0.3s ease; /* Smooth transition for hover effect */
+        margin-top: 5px; /* Adjust the button downwards */
+        margin-left: -10px !important; /* Adjust the button to the left */
+        position: relative; /* Relative positioning for fine control */
+    }
+
+    .logout-btn:hover {
+        background-color: white; /* Black background on hover */
+        color: black; /* White text on hover */
+    }
+</style>

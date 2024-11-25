@@ -68,6 +68,15 @@
             text-align: right;
             padding: 10px;
         }
+         /* Adjusting navbar padding directly */
+         #navbarSupportedContent {
+            padding: 5px 0 2px 0; /* Fine-tuned padding to match the desired style */
+            padding-bottom: 0 !important;
+        }
+
+        #navbarSupportedContent .navbar-nav .nav-link {
+            padding: 5px 25px; /* Adjust padding to align with updated navbar styling */
+        }
 
     </style>
 </head>
@@ -98,7 +107,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $order->product->title }}</td>
-                        <td>${{ number_format($order->product->price, 2) }}</td>
+                        <td>PHP{{ number_format($order->product->price, 2) }}</td>
                         <td>{{ $order->quantity }}</td>
                         <td>{{ $order->size }}</td>
                         <td>{{ $order->color }}</td>
@@ -106,7 +115,7 @@
                         <td>
                             <img src="products/{{ $order->product->image }}" alt="{{ $order->product->title }}">
                         </td>
-                        <td>${{ number_format($order_total, 2) }}</td>
+                        <td>PHP{{ number_format($order_total, 2) }}</td>
                     </tr>
                 @endforeach
             </tbody>
