@@ -5,7 +5,7 @@
 
     <style type="text/css">
         body {
-            background-color: #2c2c2c; /* Dark background for contrast */
+            background-color: #2c2c2c;
             color: #ffffff;
             font-family: 'Arial', sans-serif;
         }
@@ -68,8 +68,8 @@
 
         .form-row-half input {
             width: 100px;
-            height: 50px; /* Increased height for larger input boxes */
-            font-size: 16px; /* Larger font for better visibility */
+            height: 50px;
+            font-size: 16px;
             padding: 10px;
         }
 
@@ -85,7 +85,7 @@
             font-size: 16px;
             font-weight: bold;
             color: #ffffff;
-            background-color: #28a745; /* Green */
+            background-color: #28a745;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -130,16 +130,37 @@
                     <label>Description</label>
                     <textarea name="description" required></textarea>
                 </div>
+                <div class="form-row">
+                    <label>Price</label>
+                    <input type="number" name="price" step="1" min="0" max="100000" pattern="[0-9]+" required>
+                </div>
+
+                <!-- Sizes -->
                 <div class="form-row-half">
                     <div>
-                        <label>Price</label>
-                        <input type="number" name="price" step="1" min="0" max="100000" pattern="[0-9]+" required>
+                        <label>Small Quantity</label>
+                        <input type="number" name="small" step="1" min="0" max="1000" pattern="[0-9]+" value="0" required>
                     </div>
                     <div>
-                        <label>Quantity</label>
-                        <input type="number" name="qty" step="1" min="0" max="1000" pattern="[0-9]+" required>
+                        <label>Medium Quantity</label>
+                        <input type="number" name="medium" step="1" min="0" max="1000" pattern="[0-9]+" value="0" required>
                     </div>
                 </div>
+                <div class="form-row-half">
+                    <div>
+                        <label>Large Quantity</label>
+                        <input type="number" name="large" step="1" min="0" max="1000" pattern="[0-9]+" value="0" required>
+                    </div>
+                    <div>
+                        <label>Extra Small Quantity</label>
+                        <input type="number" name="x_small" step="1" min="0" max="1000" pattern="[0-9]+" value="0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label>Extra Large Quantity</label>
+                    <input type="number" name="x_large" step="1" min="0" max="1000" pattern="[0-9]+" value="0" required>
+                </div>
+
                 <div class="form-row">
                     <label>Product Category</label>
                     <select name="category" required>

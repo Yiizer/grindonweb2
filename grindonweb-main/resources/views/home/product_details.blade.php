@@ -266,7 +266,7 @@
                     </div>
 
                     <p class="category"><strong>Category:</strong> {{ $data->category }}</p>
-                    <p class="quantity"><strong>Available Quantity:</strong> {{ $data->quantity }}</p>
+                    <p class="quantity"><strong>Available Quantity:</strong> <span id="available-stock">{{ $data->small }}</span></p>
 
                     <div class="price">PHP {{ number_format($data->price, 2) }}</div>
 
@@ -277,10 +277,12 @@
                         <!-- Size Selection -->
                         <div class="form-group">
                             <label for="size">Size</label>
-                            <select name="size" id="size" required>
-                                <option value="Small" {{ old('size') == 'Small' ? 'selected' : '' }}>Small</option>
-                                <option value="Medium" {{ old('size') == 'Medium' ? 'selected' : '' }}>Medium</option>
-                                <option value="Large" {{ old('size') == 'Large' ? 'selected' : '' }}>Large</option>
+                            <select name="size" id="size" onchange="updateStock()" required>
+                                <option value="small" {{ old('size') == 'small' ? 'selected' : '' }}>Small</option>
+                                <option value="medium" {{ old('size') == 'medium' ? 'selected' : '' }}>Medium</option>
+                                <option value="large" {{ old('size') == 'large' ? 'selected' : '' }}>Large</option>
+                                <option value="x_small" {{ old('size') == 'x_small' ? 'selected' : '' }}>X-Small</option>
+                                <option value="x_large" {{ old('size') == 'x_large' ? 'selected' : '' }}>X-Large</option>
                             </select>
                         </div>
 
@@ -296,12 +298,12 @@
                         <!-- Quantity Selection -->
                         <div class="form-group">
                             <label for="quantity">Quantity</label>
-                            <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $data->quantity }}" required>
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $data->small }}" required>
                         </div>
 
                         <!-- Add to Cart Button -->
                         <div class="add-to-cart-btn">
-                            @if ($data->quantity == 0)
+                            @if ($data->small == 0 && $data->medium == 0 && $data->large == 0 && $data->x_small == 0 && $data->x_large == 0)
                                 <button type="button" class="btn btn-danger" disabled>Out of Stock</button>
                             @else
                                 <button type="submit" class="btn">Add to Cart</button>
@@ -322,35 +324,67 @@
     @include('home.footer')
 
     <script>
-    // Get modal elements
-    const modal = document.getElementById('imageModal');
-    const modalImage = document.getElementById('modalImage');
-    const productImage = document.getElementById('productImage');
-    const closeModal = document.querySelector('.close-modal');
-    const body = document.body;
+        // Get modal elements
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const productImage = document.getElementById('productImage');
+        const closeModal = document.querySelector('.close-modal');
+        const body = document.body;
 
-    // Open the modal when the product image is clicked
-    productImage.addEventListener('click', () => {
-        modal.style.display = 'block';
-        modalImage.src = productImage.src;
-        body.classList.add('modal-open'); // Hide the header
-    });
+        // Open the modal when the product image is clicked
+        productImage.addEventListener('click', () => {
+            modal.style.display = 'block';
+            modalImage.src = productImage.src;
+            body.classList.add('modal-open'); // Hide the header
+        });
 
-    // Close the modal when the close button is clicked
-    closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
-        body.classList.remove('modal-open'); // Show the header
-    });
-
-    // Close the modal when clicking outside the modal image
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
+        // Close the modal when the close button is clicked
+        closeModal.addEventListener('click', () => {
             modal.style.display = 'none';
             body.classList.remove('modal-open'); // Show the header
-        }
-    });
-</script>
+        });
 
+        // Close the modal when clicking outside the modal image
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                body.classList.remove('modal-open'); // Show the header
+            }
+        });
+
+        // Update the displayed available stock based on the selected size
+        function updateStock() {
+            // Get the selected size
+            const size = document.getElementById('size').value;
+
+            // Determine the available stock based on the selected size
+            let stockQuantity = 0;
+
+            // Check which size was selected and set stock accordingly
+            if (size === 'small') {
+                stockQuantity = {{ $data->small }};
+            } else if (size === 'medium') {
+                stockQuantity = {{ $data->medium }};
+            } else if (size === 'large') {
+                stockQuantity = {{ $data->large }};
+            } else if (size === 'x_small') {
+                stockQuantity = {{ $data->x_small }};
+            } else if (size === 'x_large') {
+                stockQuantity = {{ $data->x_large }};
+            }
+
+            // Update the stock display
+            document.getElementById('available-stock').textContent = stockQuantity;
+            
+            // Update the max quantity for the quantity input field based on stock
+            document.getElementById('quantity').max = stockQuantity;
+        }
+
+        // Initialize stock info when the page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            updateStock();
+        });
+    </script>
 
 </body>
 

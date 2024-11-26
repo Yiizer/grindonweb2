@@ -1,7 +1,6 @@
 <html lang="en">
-<head>
-    
 
+<head>
     @include('home.css')
 
     <style type="text/css">
@@ -28,7 +27,8 @@
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        th, td {
+        th,
+        td {
             text-align: center;
             padding: 15px;
         }
@@ -68,61 +68,64 @@
             text-align: right;
             padding: 10px;
         }
-         /* Adjusting navbar padding directly */
-         #navbarSupportedContent {
-            padding: 5px 0 2px 0; /* Fine-tuned padding to match the desired style */
+
+        /* Adjusting navbar padding directly */
+        #navbarSupportedContent {
+            padding: 5px 0 2px 0;
             padding-bottom: 0 !important;
         }
 
         #navbarSupportedContent .navbar-nav .nav-link {
-            padding: 5px 25px; /* Adjust padding to align with updated navbar styling */
+            padding: 5px 25px;
         }
 
     </style>
 </head>
+
 <body>
-<div class="hero_area">
-    @include('home.header')
+    <div class="hero_area">
+        @include('home.header')
 
-    <div class="div_center">
-        <table>
-            <thead>
-                <tr>
-                    <th>Order #</th>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Size</th>
-                    <th>Color</th>
-                    <th>Delivery Status</th>
-                    <th>Image</th>
-                    <th>Total Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($order as $order)
-                    @php
-                        $order_total = $order->product->price * $order->quantity;
-                    @endphp
+        <div class="div_center">
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $order->product->title }}</td>
-                        <td>PHP{{ number_format($order->product->price, 2) }}</td>
-                        <td>{{ $order->quantity }}</td>
-                        <td>{{ $order->size }}</td>
-                        <td>{{ $order->color }}</td>
-                        <td>{{ $order->status }}</td>
-                        <td>
-                            <img src="products/{{ $order->product->image }}" alt="{{ $order->product->title }}">
-                        </td>
-                        <td>PHP{{ number_format($order_total, 2) }}</td>
+                        <th>Order #</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>Delivery Status</th>
+                        <th>Image</th>
+                        <th>Total Price</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach($order as $order)
+                        @php
+                            $order_total = $order->product->price * $order->quantity;
+                        @endphp
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $order->product->title }}</td>
+                            <td>PHP{{ number_format($order->product->price, 2) }}</td>
+                            <td>{{ $order->quantity }}</td>
+                            <td>{{ $order->size }}</td>
+                            <td>{{ $order->color }}</td>
+                            <td>{{ $order->status }}</td>
+                            <td>
+                                <img src="products/{{ $order->product->image }}" alt="{{ $order->product->title }}">
+                            </td>
+                            <td>PHP{{ number_format($order_total, 2) }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
-@include('home.footer')
+    @include('home.footer')
 </body>
+
 </html>
