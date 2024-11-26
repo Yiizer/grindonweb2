@@ -18,10 +18,15 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->decimal('price', 8, 2)->nullable();
             $table->string('category')->nullable();
-            $table->string('quantity')->nullable();
+            $table->integer('small')->nullable();
+            $table->integer('medium')->nullable();
+            $table->integer('large')->nullable();
+            $table->integer('x_small')->nullable();
+            $table->integer('x_large')->nullable();
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.

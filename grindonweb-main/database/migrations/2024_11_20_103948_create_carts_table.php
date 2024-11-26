@@ -22,11 +22,13 @@ return new class extends Migration
             $table->string('size'); // Example: Small, Medium, Large
             $table->string('color'); // Example: Black, White
             $table->integer('quantity')->default(1); // Quantity of the product in the cart
+            $table->decimal('price', 8, 2); // Price of the product for this cart entry
 
             // Foreign keys
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade');
 
+            // Timestamps for cart entries
             $table->timestamps();
         });
     }

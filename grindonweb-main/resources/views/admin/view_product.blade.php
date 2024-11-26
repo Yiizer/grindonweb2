@@ -59,59 +59,62 @@
 
             <div class="div_deg">
 
-                <table class="table_deg">
+            <table>
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Small</th>
+            <th>Medium</th>
+            <th>Large</th>
+            <th>X Small</th>
+            <th>X Large</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($product as $item)
+        <tr>
+            <td>{{ $item->id }}</td>
+            <td>{{ $item->title }}</td>
+            <td>{{ $item->description }}</td>
+            <td>${{ number_format($item->price, 2) }}</td>
+            <td>{{ $item->category }}</td>
+            <td>{{ $item->small }}</td>
+            <td>{{ $item->medium }}</td>
+            <td>{{ $item->large }}</td>
+            <td>{{ $item->x_small }}</td>
+            <td>{{ $item->x_large }}</td>
+            <td>
+                @if($item->image)
+                    <img src="{{ asset('products/' . $item->image) }}" alt="Product Image" style="width: 100px; height: auto;">
+                @else
+                    No Image
+                @endif
+            </td>
+            <td class="actions">
+                <a href="{{ url('edit_product', $item->id) }}" class="btn edit">Edit</a>
+                <form action="{{ url('delete_product', $item->id) }}" method="POST" style="display:inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn delete" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 
-                    <tr>
-                        
-                        <th>Product Title</th>
+<!-- Pagination Links -->
+<div class="pagination-links">
+    {{ $product->links() }}
+</div>
 
-                        <th>Description</th>
 
-                        <th>Category</th>
-
-                        <th>Price</th>
-
-                        <th>Quantity</th>
-
-                        <th>Image</th>
-
-                        <th>Edit</th>
-
-                        <th>Delete</th>
-
-                        
-
-                    </tr>
-
-                    @foreach($product as $products)
-                    <tr>
-
-                        <td>{{$products->title}}</td>
-
-                        <td>{!!Str::limit($products->description,50)!!}</td>
-
-                        <td>{{$products->category}}</td>
-
-                        <td>{{$products->price}}</td>
-
-                        <td>{{$products->quantity}}</td>
-
-                        <td>
-                            <img height="200" width="400" src="products/{{$products->image}}" alt="">
-                        </td>
-
-                        <td>
-                          <a class = "btn btn-success" href="{{url('update_product',$products->id)}}">Edit</a>
-                        </td>
-
-                        <td>
-                            <a class="btn btn-danger" onClick="confirmation(event)" href="{{url('delete_product',$products->id)}}">Delete</a>
-                        </td>
-
-                    </tr>
-
-                    @endforeach
-                </table>
 
                 
 

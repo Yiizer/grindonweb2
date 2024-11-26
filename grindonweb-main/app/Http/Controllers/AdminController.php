@@ -73,35 +73,54 @@ class AdminController extends Controller
 
     public function upload_product(Request $request)
     {
-        $data = new Product;
-
+        // Validate the input
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'category' => 'required|string',
+            'small' => 'required|integer|min:0',
+            'medium' => 'required|integer|min:0',
+            'large' => 'required|integer|min:0',
+            'x_small' => 'required|integer|min:0',
+            'x_large' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+    
+        // Create a new product
+        $data = new Product();
+    
+        // Assign the input values
         $data->title = $request->title;
-
         $data->description = $request->description;
-
         $data->price = $request->price;
-
-        $data->quantity = $request->qty;
-
         $data->category = $request->category;
-
-        $image = $request->image;
-
-        if($image)
-        {
-            $imagename = time().'.'.$image->getClientOriginalExtension();
-
-            $request->image->move('products',$imagename);
-
+    
+        // Assign specific quantities
+        $data->small = $request->small;
+        $data->medium = $request->medium;
+        $data->large = $request->large;
+        $data->x_small = $request->x_small;
+        $data->x_large = $request->x_large;
+    
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagename = time() . '.' . $image->getClientOriginalExtension();
+            $image->move('products', $imagename);
             $data->image = $imagename;
         }
-
+    
+        // Save the product to the database
         $data->save();
-
-        toastr()->timeOut(10000)->closeButton()->addSuccess('Product Added Succesfully');
-
+    
+        // Show success message
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Product Added Successfully');
+    
+        // Redirect back to the form
         return redirect()->back();
     }
+    
     
     public function view_product()
     {
