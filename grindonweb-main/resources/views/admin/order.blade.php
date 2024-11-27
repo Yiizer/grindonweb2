@@ -57,62 +57,88 @@
             border-radius: 4px;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 8px 12px;
-            font-size: 14px;
-            text-transform: uppercase;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #ffffff;
-            margin-right: 5px;
-            transition: background-color 0.3s ease;
-        }
+        /* Standardized Button Styling */
+/* Standardized Button Styling */
+.btn {
+    display: inline-block;
+    padding: 10px 20px; /* Adjust button height and width */
+    font-size: 14px;
+    text-transform: uppercase;
+    border-radius: 4px; /* Rounded corners for consistency */
+    text-decoration: none;
+    color: #ffffff;
+    border: 2px solid transparent; /* Uniform border size */
+    margin-right: 10px; /* Add spacing between buttons */
+    box-sizing: border-box; /* Ensure consistent sizing */
+    width: 120px; /* Make both buttons the same width */
+    text-align: center; /* Center-align the button text */
+}
 
-        .btn-primary {
-            background-color: #555555;
-        }
+/* Primary Button (On The Way) */
+.btn-primary {
+    background-color: black;
+    border-color: white; /* White border for "On The Way" button */
+    margin-bottom: 10px; /* Add margin between "On The Way" and "Delivered" */
+}
 
-        .btn-primary:hover {
-            background-color: #333333;
-        }
+.btn-primary:hover {
+    background-color: #555555;
+    border-color: white; /* Keep the white border on hover */
+}
 
-        .btn-success {
-            background-color: #7d7d7d;
-        }
+/* Success Button (Delivered) */
+.btn-success {
+    background-color: black;
+    border-color: white; /* White border for "Delivered" button */
+}
 
-        .btn-success:hover {
-            background-color: #555555;
-        }
+.btn-success:hover {
+    background-color: #555555;
+    border-color: white; /* Keep the white border on hover */
+}
 
-        .btn-secondary {
-            background-color: #a1a1a1;
-        }
+/* Secondary Button (Print PDF) */
+.btn-secondary {
+    background-color: black; /* Light grey background for "Print PDF" */
+    border-color: white; /* White border for "Print PDF" */
+}
 
-        .btn-secondary:hover {
-            background-color: #7d7d7d;
-        }
+.btn-secondary:hover {
+    background-color: #555555;
+    border-color: white; /* Keep the white border on hover */
+}
 
+
+        /* Status Styling */
         td span {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
+    padding: 4px 8px;
+    font-size: 14px;
+    color: white; /* White text for all statuses */
+    background-color: transparent; /* No background */
+    border: none; /* No border */
+}
 
-        td span[style="color:red"] {
-            background-color: #f2f2f2;
-            color: #333333;
-        }
 
-        td span[style="color:skyblue"] {
-            background-color: #e8e8e8;
-            color: #333333;
-        }
+td span[style="color:red"] {
+    background-color: #e74c3c; /* Red background for 'in progress' */
+}
 
-        td span[style="color:green"] {
-            background-color: #d6d6d6;
-            color: #333333;
-        }
+td span[style="color:skyblue"] {
+    background-color: #3498db; /* Skyblue background for 'On the Way' */
+}
+
+td span[style="color:green"] {
+    background-color: #2ecc71; /* Green background for 'Delivered' */
+}
+
+/* Product Image Styling */
+td img {
+    width: 100px; /* Fixed width for consistency */
+    height: 100px; /* Fixed height for consistency */
+    border-radius: 8px; /* Uniform border-radius */
+    object-fit: cover; /* Maintain aspect ratio and crop if necessary */
+}
+
 
         @media (max-width: 768px) {
             table {
@@ -179,9 +205,9 @@
                             <td>{{ $order->payment_method }}</td>
                             <td>
                                 @if($order->status == 'in progress')
-                                <span style="color:red">{{ $order->status }}</span>
+                                <span style="color:white">{{ $order->status }}</span>
                                 @elseif($order->status == 'On the Way')
-                                <span style="color:skyblue">{{ $order->status }}</span>
+                                <span style="color:white">{{ $order->status }}</span>
                                 @endif
                             </td>
                             <td>

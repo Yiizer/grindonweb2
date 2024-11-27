@@ -69,13 +69,16 @@
             transition: background-color 0.3s ease;
         }
 
-        .btn-secondary {
-            background-color: #a1a1a1;
-        }
+        /* Secondary Button (Print PDF) */
+.btn-secondary {
+    background-color: black; /* Light grey background for "Print PDF" */
+    border-color: white; /* White border for "Print PDF" */
+}
 
-        .btn-secondary:hover {
-            background-color: #7d7d7d;
-        }
+.btn-secondary:hover {
+    background-color: #555555;
+    border-color: white; /* Keep the white border on hover */
+}
 
         td span {
             padding: 4px 8px;

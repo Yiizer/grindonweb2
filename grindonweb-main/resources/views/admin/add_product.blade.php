@@ -41,13 +41,19 @@
         textarea,
         input[type='file'] {
             width: 100%;
-            padding: 12px;
+            height: 50px; /* Standardized height */
+            padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #cccccc;
-            border-radius: 6px;
+            border-radius: 10px;
             background-color: #ffffff;
             color: #333333;
-            font-size: 14px;
+            font-size: 16px; /* Standardized font size */
+        }
+
+        textarea {
+            resize: none;
+            height: 100px; /* Exception for textarea */
         }
 
         input[type='text']:focus,
@@ -63,40 +69,55 @@
         .form-row-half {
             display: flex;
             justify-content: space-between;
-            gap: 40px;
+            gap: 20px;
+        }
+
+        .form-row-half div {
+            flex: 1;
         }
 
         .form-row-half input {
-            width: 100px;
-            height: 50px;
-            font-size: 16px;
-            padding: 10px;
+            width: 100%; /* Inputs will fill their container */
         }
 
-        textarea {
-            resize: none;
-            height: 100px;
-        }
 
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #28a745;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s ease-in-out;
-        }
+        /* Standardized Button Styling */
+/* Parent container of the button (form-row) */
+.form-row1 {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically if you want */
+    margin: 20px 0; /* Add some spacing around */
+}
 
-        .btn:hover {
-            background-color: #218838;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
+/* Standardized Button Styling */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.btn:hover {
+    background-color: #555555;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border-color: white;
+}
+
+/* Focus Effect */
+.btn:focus {
+    outline: none;
+    border-color: white;
+}
+
 
         @media (max-width: 768px) {
             .form-container {
@@ -174,7 +195,7 @@
                     <label>Product Image</label>
                     <input type="file" name="image">
                 </div>
-                <div class="form-row">
+                <div class="form-row1">
                     <button class="btn" type="submit">Add Product</button>
                 </div>
             </form>
