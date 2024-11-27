@@ -14,7 +14,6 @@
 
     .table_deg{
         border: 2px solid white;
-
     }
 
     th{
@@ -31,11 +30,10 @@
         color: white;
     }
 
-    input[type='search']
-    {
-      width: 500px;
-      height: 60px;
-      margin-left: 50px;
+    input[type='search'] {
+        width: 500px;
+        height: 60px;
+        margin-left: 50px;
     }
 
     </style>
@@ -45,21 +43,19 @@
     @include('admin.header')
     <!-- Sidebar Navigation-->
     @include('admin.sidebar')
-      <!-- Sidebar Navigation end-->
-      <div class="page-content">
-        <div class="page-header">
-          <div class="container-fluid">
+    <!-- Sidebar Navigation end-->
+    <div class="page-content">
+        <div class="container-fluid">
 
-          <form action="{{url('product_search')}}" method="get">
-            @csrf
-            <input type="search" name="search">
-            <input type="submit" class="btn btn-secondary" value+="Search">
-          </form>
-
+            <form action="{{url('product_search')}}" method="get">
+                @csrf
+                <input type="search" name="search" placeholder="Search products...">
+                <input type="submit" class="btn btn-secondary" value="Search">
+            </form>
 
             <div class="div_deg">
 
-            <table>
+            <table class="table_deg">
     <thead>
         <tr>
             <th>Product ID</th>
@@ -114,21 +110,10 @@
     {{ $product->links() }}
 </div>
 
-
-
                 
-
             </div>  
-            
-            <div class="div_deg">
-
-            {{$product->links()}}
-
-            </div>
-
         </div>
-      </div>
     </div>
-@include('admin.js')
+    @include('admin.js')
   </body>
 </html>

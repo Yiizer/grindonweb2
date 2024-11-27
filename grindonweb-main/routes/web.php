@@ -33,15 +33,16 @@ route::get('add_product', [AdminController::class, 'add_product'])->middleware([
 route::post('upload_product', [AdminController::class, 'upload_product'])->middleware(['auth', 'admin']);
 route::get('view_product', [AdminController::class, 'view_product'])->middleware(['auth', 'admin']);
 route::get('delete_product/{id}', [AdminController::class, 'delete_product'])->middleware(['auth', 'admin']);
-route::get('update_product/{id}', [AdminController::class, 'update_product'])->middleware(['auth', 'admin']);
-route::post('edit_product/{id}', [AdminController::class, 'edit_product'])->middleware(['auth', 'admin']);
+
+// Update product routes
+route::get('edit_product/{id}', [AdminController::class, 'edit_product'])->middleware(['auth', 'admin']);
+route::put('edit_product/{id}', [AdminController::class, 'update_product'])->middleware(['auth', 'admin']);  // Use PUT method for updating
 route::get('product_search', [AdminController::class, 'product_search'])->middleware(['auth', 'admin']);
 route::get('view_orders', [AdminController::class, 'view_orders'])->middleware(['auth', 'admin']);
 route::get('on_the_way/{id}', [AdminController::class, 'on_the_way'])->middleware(['auth', 'admin']);
 route::get('delivered/{id}', [AdminController::class, 'delivered'])->middleware(['auth', 'admin']);
 route::get('print_pdf/{id}', [AdminController::class, 'print_pdf'])->middleware(['auth', 'admin']);
 Route::get('/completed_orders', [AdminController::class, 'completed_orders'])->name('completed_orders');
-
 
 // Product and Cart routes
 route::get('product_details/{id}', [HomeController::class, 'product_details']);
@@ -57,7 +58,6 @@ route::get('testimonial', [HomeController::class, 'testimonial']);
 route::get('contact', [HomeController::class, 'contact']);
 
 // Contact Routes
-
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/admin/messages', [AdminController::class, 'messages'])->name('admin.messages')->middleware('auth');
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
