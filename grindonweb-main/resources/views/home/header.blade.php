@@ -51,7 +51,7 @@
                         
                         <a href="{{ url('mycart') }}">
                             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                            {{ $count }}
+                            <span style="color: white;">{{ $count }}</span>
                         </a>
                         <form style="padding: 15px" method="POST" action="{{ route('logout') }}">
                             @csrf

@@ -147,6 +147,7 @@ class HomeController extends Controller
             $data->size = $size;
             $data->color = $color;
             $data->quantity = $quantity;
+            $data->price = $product->price; // Add the product price
             $data->save();
         }
     
@@ -178,7 +179,7 @@ class HomeController extends Controller
                 return 0; // If the size doesn't match, return 0
         }
     }
-    
+
     public function mycart()
     {
         if(Auth::id())
