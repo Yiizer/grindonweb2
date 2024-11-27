@@ -179,7 +179,7 @@ class HomeController extends Controller
                 return 0; // If the size doesn't match, return 0
         }
     }
-    
+
     public function mycart()
     {
         if(Auth::id())
