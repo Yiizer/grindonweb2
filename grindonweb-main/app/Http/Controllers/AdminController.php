@@ -121,13 +121,12 @@ class AdminController extends Controller
         return redirect()->back();
     }
     
-    
     public function view_product()
     {
         $product = Product::paginate(3);
-
-        return view('admin.view_product',compact('product'));
+        return view('admin.view_product', compact('product'));
     }
+    
 
     public function delete_product($id)
 {
@@ -176,50 +175,61 @@ class AdminController extends Controller
 
         return view('admin.view_product',compact('product'));
     }
-    public function update_product($id)
-    {
-        $data = Product::find($id);
-     
-        $category = Category::all();
-
+    public function edit_product($id)
+{
+    // Fetch the product data
+    $data = Product::findOrFail($id);
     
-        return view('admin.update_page', compact('data','category'));
+    // Fetch categories for the dropdown
+    $category = Category::all(); // Assuming you have a Category model
+
+    // Return the update page view with data and category
+    return view('admin.update_page', compact('data', 'category'));
+}
+// Update the product in the database
+public function update_product(Request $request, $id)
+{
+    // Validate incoming request data
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'price' => 'required|numeric',
+        'category' => 'required|string',
+        'small' => 'required|integer',
+        'medium' => 'required|integer',
+        'large' => 'required|integer',
+        'x_small' => 'required|integer',
+        'x_large' => 'required|integer',
+        'image' => 'nullable|image', // Optional image upload
+    ]);
+
+    // Find the product by ID
+    $product = Product::findOrFail($id);
+
+    // Update product details
+    $product->title = $validated['title'];
+    $product->description = $validated['description'];
+    $product->price = $validated['price'];
+    $product->category = $validated['category'];
+    $product->small = $validated['small'];
+    $product->medium = $validated['medium'];
+    $product->large = $validated['large'];
+    $product->x_small = $validated['x_small'];
+    $product->x_large = $validated['x_large'];
+
+    // Handle the image upload if a new image is provided
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('products', 'public'); // Store image in 'products' directory
+        $product->image = $imagePath;
     }
 
-    public function edit_product(Request $request, $id)
-    {
-        $data = Product::find($id);
-        
-        $data->title = $request->title;
+    // Save the updated product
+    $product->save();
 
-        $data->description = $request->description;
+    // Redirect with success message
+    return redirect('view_product')->with('success', 'Product Updated Successfully');
+}
 
-        $data->price = $request->price;
-
-        $data->quantity = $request->quantity;
-
-        $data->category = $request->category;
-
-        $image= $request->image;
-
-        if($image)
-        {
-        $imagename= time().'.'.$image->getClientOriginalExtension();
-
-        $request->image->move('products',$imagename);
-
-        $data->image = $imagename;
-
-
-        }
-            $data->save();
-
-            toastr()->timeOut(10000)->closeButton()->addSuccess('Product Updated Succesfully');
-                 
-            return redirect('/view_product');
-            
-
-    }
 
     public function view_orders()
 {
