@@ -82,7 +82,7 @@
             <td>{{ $item->id }}</td>
             <td>{{ $item->title }}</td>
             <td>{{ $item->description }}</td>
-            <td>${{ number_format($item->price, 2) }}</td>
+            <td>PHP {{ number_format($item->price, 2) }}</td>
             <td>{{ $item->category }}</td>
             <td>{{ $item->small }}</td>
             <td>{{ $item->medium }}</td>
