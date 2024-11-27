@@ -36,6 +36,46 @@
         margin-left: 50px;
     }
 
+/* Standardized Button Styling */
+.btn {
+    display: inline-block;
+    padding: 12px 25px; /* Adjust button height and width (increase padding for more space) */
+    font-size: 14px; /* Adjust font size for better readability */
+    text-transform: uppercase;
+    border-radius: 4px; /* Rounded corners for consistency */
+    text-decoration: none;
+    color: #ffffff;
+    border: 2px solid transparent; /* Uniform border size */
+    box-sizing: border-box; /* Ensure consistent sizing */
+    text-align: center; /* Center-align the button text */
+    margin-right: 10px; /* Add spacing between buttons */
+}
+
+/* Edit Button */
+.btn-edit {
+    background-color: black; /* Black background for Edit */
+    border-color: white;
+}
+
+.btn-edit:hover {
+    background-color: #555555; /* Gray background on hover */
+    border-color: white;
+}
+
+/* Delete Button */
+.btn-delete {
+    background-color: black; /* Black background for Delete */
+    border-color: white;
+}
+
+.btn-delete:hover {
+    background-color: #555555; /* Gray background on hover */
+    border-color: white;
+}
+
+
+
+
     </style>
 
   </head>
@@ -93,13 +133,14 @@
                 @endif
             </td>
             <td class="actions">
-                <a href="{{ url('edit_product', $item->id) }}" class="btn edit">Edit</a>
-                <form action="{{ url('delete_product', $item->id) }}" method="POST" style="display:inline-block;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn delete" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
-                </form>
-            </td>
+    <a href="{{ url('edit_product', $item->id) }}" class="btn btn-edit">Edit</a>
+    <form action="{{ url('delete_product', $item->id) }}" method="POST" style="display:inline-block;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
+    </form>
+</td>
+
         </tr>
         @endforeach
     </tbody>

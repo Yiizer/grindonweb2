@@ -50,35 +50,56 @@
             border: 1px solid #444; /* Dark gray borders */
         }
 
+        /* Standardized Button Styling */
         .btn {
-            background-color: #555; /* Gray background for buttons */
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    display: inline-block;
+    padding: 12px 25px; /* Adjust button height and width (increase padding for more space) */
+    font-size: 14px; /* Adjust font size for better readability */
+    text-transform: uppercase;
+    border-radius: 4px; /* Rounded corners for consistency */
+    text-decoration: none;
+    color: #ffffff;
+    border: 2px solid transparent; /* Uniform border size */
+    box-sizing: border-box; /* Ensure consistent sizing */
+    text-align: center; /* Center-align the button text */
+    margin-right: 10px; /* Add spacing between buttons */
+}
 
-        .btn:hover {
-            background-color: #777; /* Lighter gray on hover */
-        }
+/* Primary Button (Add Category) */
+.btn-primary {
+    background-color: black; /* Dark gray for "Add Category" button */
+    border-color: white; /* White border for "Add Category" button */
+}
 
-        .btn-primary {
-            background-color: #333; /* Dark gray for primary button */
-        }
+.btn-primary:hover {
+    background-color: #555555;
+    border-color: white; /* Keep the white border on hover */
+}
 
-        .btn-success {
-            background-color: #4CAF50; /* Green for success buttons */
-        }
+/* Success Button (Edit) */
+.btn-success {
+    background-color: black; /* Green background for "Edit" button */
+    border-color: white; /* White border for "Edit" button */
+}
 
-        .btn-danger {
-            background-color: #f44336; /* Red for danger buttons */
-        }
+.btn-success:hover {
+    background-color: #555555;
+    border-color: white; /* Keep the white border on hover */
+}
 
-        .btn-danger:hover, .btn-success:hover {
-            background-color: #666; /* Lighter shade for hover effects */
-        }
+/* Danger Button (Delete) */
+.btn-danger {
+    background-color: black; /* Red background for "Delete" button */
+    border-color: white; /* White border for "Delete" button */
+}
+
+.btn-danger:hover {
+    background-color: #555555; /* Darker red on hover */
+    border-color: white; /* Keep the white border on hover */
+}
+
+/* Adjust table and button margin styles if necessary */
+
 
         h1 {
             color: white; /* White text for the title */

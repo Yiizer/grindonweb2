@@ -972,7 +972,7 @@ img {
 .actions button {
   padding: 8px 12px;
   margin: 5px;
-  background-color: #4CAF50; /* Green */
+  background-color: black; /* Green */
   color: white;
   border-radius: 5px;
   text-decoration: none;
@@ -980,7 +980,7 @@ img {
 
 .actions a:hover,
 .actions button:hover {
-  background-color: #45a049;
+  background-color: #555555;
 }
 
 
