@@ -50,7 +50,7 @@
         }
 
         td {
-            color: #555;
+            color: white;
         }
 
         td img {
