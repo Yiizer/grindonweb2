@@ -14,7 +14,7 @@
 
         <!-- Logo Section -->
         <a class="navbar-brand" href="">
-            <img src="{{ asset('images/Logo/grindlogo.png') }}" style="height: 50px; width: auto;">
+            <img src="{{ asset('images/Logo/grindlogo.png') }}" style="height: 50px; width: auto; object-fit: contain;">
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,7 @@
                         
                         <a href="{{ url('mycart') }}">
                             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                            {{ $count }}
+                            <span style="color: white;">{{ $count }}</span>
                         </a>
                         <form style="padding: 15px" method="POST" action="{{ route('logout') }}">
                             @csrf

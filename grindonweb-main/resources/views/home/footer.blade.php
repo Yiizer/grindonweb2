@@ -1,16 +1,16 @@
 <section class="info_section  layout_padding2-top">
     <div class="social_container">
       <div class="social_box">
-        <a href="">
+        <a href="https://www.facebook.com/grinditup">
           <i class="fa fa-facebook" aria-hidden="true"></i>
         </a>
-        <a href="">
+        <a href="https://x.com/EZR_Esports">
           <i class="fa fa-twitter" aria-hidden="true"></i>
         </a>
-        <a href="">
+        <a href="https://www.instagram.com/ezrebornesportsph/">
           <i class="fa fa-instagram" aria-hidden="true"></i>
         </a>
-        <a href="">
+        <a href="https://www.tiktok.com/@ezrgearsph">
           <i class="fa fa-youtube" aria-hidden="true"></i>
         </a>
       </div>

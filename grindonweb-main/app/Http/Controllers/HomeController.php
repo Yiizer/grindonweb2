@@ -180,6 +180,7 @@ class HomeController extends Controller
         }
     }
 
+
     public function mycart()
     {
         if(Auth::id())

@@ -1003,6 +1003,152 @@ img {
   }
 }
 
+/* General responsive adjustments */
+@media (max-width: 1440px) {
+  body {
+    padding: 10px;
+  }
+  .navbar-brand {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .layout_padding {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  .slider_section .detail-box h1 {
+    font-size: 3rem;
+  }
+  .user-info {
+    right: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  #navbarSupportedContent {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+  }
+
+  .slider_section .img-box {
+    height: auto;
+  }
+  .slider_section .detail-box {
+    padding-left: 15px;
+    text-align: center;
+  }
+
+  .gift_section .img-box {
+    padding: 20px;
+  }
+
+  .user-info-container {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    transform: translateY(0);
+  }
+
+  .user-info {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .user-info i {
+    font-size: 28px;
+  }
+
+  .user-name {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 425px) {
+  .hero_area {
+    padding: 15px;
+  }
+  .navbar-brand {
+    font-size: 20px;
+  }
+  .slider_section .detail-box h1 {
+    font-size: 2.5rem;
+  }
+  .shop_section .box {
+    padding: 10px;
+  }
+  .info_section h6 {
+    font-size: 16px;
+  }
+
+  .user-info-container {
+    position: absolute;
+    left: 10px;
+  }
+
+  .user-info i {
+    font-size: 24px;
+  }
+
+  .user-name {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 375px) {
+  .slider_section .detail-box h1 {
+    font-size: 2rem;
+  }
+  .user-info {
+    right: 20px;
+  }
+  .contact_section form {
+    padding: 20px;
+  }
+  .footer_section p {
+    width: 90%;
+  }
+
+  .user-info-container {
+    position: absolute;
+    left: 10px;
+    margin: 0;
+  }
+}
+
+/* Flexbox and grid adjustments */
+@media (max-width: 768px) {
+  .shop_section .box .detail-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .saving_section .detail-box {
+    padding: 15px;
+  }
+  .contact_section .row {
+    flex-direction: column;
+  }
+}
+
+/* Table responsiveness */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  th, td {
+    font-size: 12px;
+    padding: 8px;
+  }
+  .actions {
+    flex-direction: column;
+  }
+}
+
+
 
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */

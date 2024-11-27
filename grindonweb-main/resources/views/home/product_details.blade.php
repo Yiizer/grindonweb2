@@ -61,12 +61,14 @@
         }
 
         .product-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            object-fit: cover;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-        }
+    width: 100%; /* Increase the width, making it larger than the container */
+    max-width: 500px; /* Optional: Set a maximum width to prevent the image from becoming too large */
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+}
+
 
         .product-image:hover img {
             transform: scale(1.05);
