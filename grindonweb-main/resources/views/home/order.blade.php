@@ -113,12 +113,21 @@
                             <td>{{ $order->quantity }}</td>
                             <td>{{ $order->size }}</td>
                             <td>{{ $order->color }}</td>
-                            <td>{{ $order->status }}</td>
+                            <td>
+                                @if($order->status == 'Delivered')
+                                <span style="color:green;">{{ $order->status }}</span>
+                                @elseif($order->status == 'in progress')
+                                <span style="color:yellow;">{{ $order->status }}</span>
+                                @else
+                                <span>{{ $order->status }}</span>
+                                @endif
+                            </td>
                             <td>
                                 <img src="products/{{ $order->product->image }}" alt="{{ $order->product->title }}">
                             </td>
                             <td>PHP{{ number_format($order_total, 2) }}</td>
                         </tr>
+
                     @endforeach
                 </tbody>
             </table>

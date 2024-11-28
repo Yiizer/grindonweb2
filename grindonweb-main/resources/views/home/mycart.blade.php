@@ -160,7 +160,7 @@
         .no-items-message {
             text-align: center;
             font-size: 18px;
-            color: #666;
+            color: black;
         }
 
         /* Gcash Modal Style */
@@ -202,43 +202,46 @@
     <div class="div_deg">
         @if(count($cart) > 0) <!-- Only show order form if cart is not empty -->
         <!-- Order Form -->
-        <div class="order_deg">
-            <h3 style="text-align:center; color: #333;">Place Your Order</h3>
-            <form action="{{ url('confirm_order') }}" method="POST" id="orderForm">
-                @csrf
+        <<div class="order_deg">
+    <h3 style="text-align:center; color: #333;">Place Your Order</h3>
+    <form action="{{ url('confirm_order') }}" method="POST" id="orderForm">
+        @csrf
 
-                <div class="div_gap">
-                    <label>Receiver Name</label>
-                    <input type="text" name="name" value="{{ Auth::user()->name }}">
-                </div>
-
-                <div class="div_gap">
-                    <label>Receiver Address</label>
-                    <textarea name="address">{{ Auth::user()->address }}</textarea>
-                </div>
-
-                <div class="div_gap">
-                    <label>Receiver Phone</label>
-                    <input type="text" name="phone" value="{{ Auth::user()->phone }}">
-                </div>
-
-                <div class="div_gap">
-                    <input class="btn btn-place-order" type="button" value="Place Order" onclick="confirm_order()">
-                </div>
-
-                <div class="div_gap">
-                    <label>Select Payment Method:</label>
-                    <div>
-                        <input type="radio" id="cash_on_delivery" name="payment_method" value="cash_on_delivery">
-                        <label for="cash_on_delivery">Cash on Delivery</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="gcash" name="payment_method" value="gcash">
-                        <label for="gcash">GCash</label>
-                    </div>
-                </div>
-            </form>
+        <div class="div_gap">
+            <label>Receiver Name</label>
+            <input type="text" name="name" value="{{ Auth::user()->name }}">
         </div>
+
+        <div class="div_gap">
+            <label>Receiver Address</label>
+            <textarea name="address">{{ Auth::user()->address }}</textarea>
+        </div>
+
+        <div class="div_gap">
+            <label>Receiver Phone</label>
+            <input type="text" name="phone" value="{{ Auth::user()->phone }}">
+        </div>
+
+        <!-- Swapped: Payment Method Section Comes First -->
+        <div class="div_gap">
+            <label>Select Payment Method:</label>
+            <div>
+                <input type="radio" id="cash_on_delivery" name="payment_method" value="cash_on_delivery">
+                <label for="cash_on_delivery">Cash on Delivery</label>
+            </div>
+            <div>
+                <input type="radio" id="gcash" name="payment_method" value="gcash">
+                <label for="gcash">GCash</label>
+            </div>
+        </div>
+
+        <!-- Swapped: Place Order Button Comes After Payment Method -->
+        <div class="div_gap">
+            <input class="btn btn-place-order" type="button" value="Place Order" onclick="confirm_order()">
+        </div>
+    </form>
+</div>
+
         @endif
 
         <!-- Cart Table -->

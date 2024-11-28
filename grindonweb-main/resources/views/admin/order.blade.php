@@ -205,9 +205,11 @@ td img {
                             <td>{{ $order->payment_method }}</td>
                             <td>
                                 @if($order->status == 'in progress')
-                                <span style="color:white">{{ $order->status }}</span>
+                                <span style="color:yellow">{{ $order->status }}</span>
                                 @elseif($order->status == 'On the Way')
-                                <span style="color:white">{{ $order->status }}</span>
+                                <span style="color:skyblue  background-color:transparent;">{{ $order->status }}</span>
+                                @elseif($order->status == 'Delivered')
+                                <span style="color:green">{{ $order->status }}</span>
                                 @endif
                             </td>
                             <td>
