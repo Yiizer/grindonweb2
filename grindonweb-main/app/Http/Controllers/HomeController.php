@@ -226,7 +226,6 @@ class HomeController extends Controller
             return redirect()->back();
         }
     
-        
         DB::beginTransaction();
     
         try {
@@ -261,6 +260,16 @@ class HomeController extends Controller
             // **Order Creation and Stock Deduction**
             foreach ($cart as $carts) {
                 $product = Product::find($carts->product_id);
+    
+                // Check if reference number already exists (only for GCash)
+                if ($paymentMethod === 'gcash') {
+                    $existingOrder = Order::where('reference_number', $referenceNumber)->first();
+                    if ($existingOrder) {
+                        DB::rollBack();
+                        toastr()->error("The reference number '{$referenceNumber}' already exists. Please double-check your reference number.");
+                        return redirect()->back();
+                    }
+                }
     
                 // Create the order
                 $order = new Order;
@@ -317,7 +326,6 @@ class HomeController extends Controller
             return redirect()->back();
         }
     }
-    
     
     
 

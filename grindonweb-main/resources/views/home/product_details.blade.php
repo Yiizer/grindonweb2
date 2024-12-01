@@ -130,7 +130,7 @@
 
         .product-details h3 {
             font-size: 32px;
-            color: #fff; /* White color for product title */
+            color: black; /* White color for product title */
             font-weight: 600;
         }
 
