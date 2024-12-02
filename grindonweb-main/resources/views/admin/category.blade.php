@@ -101,10 +101,12 @@
 /* Adjust table and button margin styles if necessary */
 
 
-        h1 {
-            color: white; /* White text for the title */
-            text-align: center;
-        }
+h1 {
+    color: white; /* White text for the title */
+    text-align: left; /* Align text to the left */
+    margin-left: 30px; /* Add some space from the left edge */
+}
+
 
     </style>
   </head>
