@@ -111,7 +111,7 @@
                             <td>{{ $order->product->title }}</td>
                             <td>PHP{{ number_format($order->product->price, 2) }}</td>
                             <td>{{ $order->quantity }}</td>
-                            <td>{{ $order->size }}</td>
+                            <td>{{ ucfirst($order->size) }}</td>
                             <td>{{ $order->color }}</td>
                             <td>
                                 @if($order->status == 'Delivered')

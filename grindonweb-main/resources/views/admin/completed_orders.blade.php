@@ -145,8 +145,8 @@
                             <td>{{ $order->rec_address }}</td>
                             <td>{{ $order->phone }}</td>
                             <td>{{ $order->product->title }}</td>
-                            <td>${{ number_format($order->product->price * $order->quantity, 2) }}</td>
-                            <td>{{ $order->size }}</td>
+                            <td>PHP {{ number_format($order->product->price * $order->quantity, 2) }}</td>
+                            <td>{{ ucfirst($order->size) }}</td>
                             <td>{{ $order->color }}</td>
                             <td>{{ $order->quantity }}</td>
                             <td>

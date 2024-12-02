@@ -73,7 +73,33 @@
     border-color: white;
 }
 
+/* Search Button */
+.btn-search {
+    background-color: black; /* Black background for Search */
+    border-color: white;
+    margin-left: 10px; /* Move the search button a little to the left */
+}
 
+.btn-search:hover {
+    background-color: #555555; /* Gray background on hover */
+    border-color: white;
+}
+form {
+    display: flex;
+    align-items: center;
+    margin-top: 20px; /* Adjust this value to move the form down */
+}
+
+input[type='search'] {
+    width: 400px;
+    height: 50px;
+    background-color: #333; /* Dark input background */
+    color: white; /* White text inside input */
+    border: 1px solid #666; /* Gray border */
+    border-radius: 4px;
+    padding: 10px;
+    margin-right: 10px; /* Space between search box and button */
+}
 
 
     </style>
@@ -87,11 +113,12 @@
     <div class="page-content">
         <div class="container-fluid">
 
-            <form action="{{url('product_search')}}" method="get">
-                @csrf
-                <input type="search" name="search" placeholder="Search products...">
-                <input type="submit" class="btn btn-secondary" value="Search">
-            </form>
+        <form action="{{url('product_search')}}" method="get">
+    @csrf
+    <input type="search" name="search" placeholder="Search products...">
+    <input type="submit" class="btn btn-search" value="Search">
+</form>
+
 
             <div class="div_deg">
 
