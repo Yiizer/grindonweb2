@@ -255,9 +255,20 @@
             </div>
 
             <div class="product-detail-card">
-                <!-- Product Image -->
+                <!-- Product Image(s) -->
                 <div class="product-image">
-                    <img src="/products/{{$data->image}}" alt="{{ $data->title }}" id="productImage">
+                    @if($data->image)
+                        @php
+                            $images = json_decode($data->image); // Decode the JSON string to get an array of image paths
+                        @endphp
+                        @if(is_array($images) && count($images) > 0)
+                            <img src="{{ asset($images[0]) }}" alt="{{ $data->title }}" id="productImage" class="thumbnail-image" data-images="{{ json_encode($images) }}" style="cursor: pointer;">
+                        @else
+                            <img src="{{ asset($data->image) }}" alt="{{ $data->title }}" id="productImage" style="cursor: pointer;">
+                        @endif
+                    @else
+                        No Image Available
+                    @endif
                 </div>
 
                 <!-- Product Details -->
@@ -321,42 +332,60 @@
         </div>
     </section>
 
-    <div id="imageModal" class="image-modal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImage">
+    <!-- Modal for Image Preview -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Product Image">
+            <div class="modal-buttons">
+                <button id="prevButton" onclick="changeImage('prev')">&#8592;</button>
+                <button id="nextButton" onclick="changeImage('next')">&#8594;</button>
+            </div>
+            <button id="closeModal" class="back-button" onclick="closeModal()">&#8592;</button>
+        </div>
     </div>
-    <!-- Product Details Section End -->
 
     @include('home.footer')
 
     <script>
-        // Get modal elements
-        const modal = document.getElementById('imageModal');
-        const modalImage = document.getElementById('modalImage');
-        const productImage = document.getElementById('productImage');
-        const closeModal = document.querySelector('.close-modal');
-        const body = document.body;
+        document.querySelectorAll('.thumbnail-image').forEach(image => {
+            image.addEventListener('click', function() {
+                const images = JSON.parse(this.getAttribute('data-images')); // Get all images for this product
+                const currentIndex = 0; // Start from the first image
 
-        // Open the modal when the product image is clicked
-        productImage.addEventListener('click', () => {
-            modal.style.display = 'block';
-            modalImage.src = productImage.src;
-            body.classList.add('modal-open'); // Hide the header
+                let modalImage = document.getElementById('modalImage');
+                
+                // Normalize the image path to use forward slashes (if necessary)
+                let imagePath = images[currentIndex].replace(/\\/g, '/'); // Replace backslashes with forward slashes
+                
+                // Set the image src to the first image in the array
+                modalImage.src = "{{ asset('') }}" + imagePath; // Corrected to asset helper without 'storage'
+
+                modalImage.setAttribute('data-index', currentIndex); // Set the current index in the modal image
+                modalImage.setAttribute('data-images', JSON.stringify(images)); // Set the images array in the modal image
+
+                document.getElementById('imageModal').style.display = 'flex'; // Show the modal
+            });
         });
 
-        // Close the modal when the close button is clicked
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-            body.classList.remove('modal-open'); // Show the header
-        });
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none'; // Hide the modal
+        }
 
-        // Close the modal when clicking outside the modal image
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-                body.classList.remove('modal-open'); // Show the header
+        function changeImage(direction) {
+            const modalImage = document.getElementById('modalImage');
+            const images = JSON.parse(modalImage.getAttribute('data-images')); // Get the array of images
+            let currentIndex = parseInt(modalImage.getAttribute('data-index')); // Get the current image index
+
+            if (direction === 'next') {
+                currentIndex = (currentIndex + 1) % images.length; // Move to next image
+            } else if (direction === 'prev') {
+                currentIndex = (currentIndex - 1 + images.length) % images.length; // Move to previous image
             }
-        });
+
+            let imagePath = images[currentIndex].replace(/\\/g, '/'); // Replace backslashes with forward slashes
+            modalImage.src = "{{ asset('') }}" + imagePath; // Set the new image source
+            modalImage.setAttribute('data-index', currentIndex); // Update the current index
+        }
 
         // Update the displayed available stock based on the selected size
         function updateStock() {
@@ -391,7 +420,7 @@
             updateStock();
         });
     </script>
-
 </body>
+
 
 </html>
