@@ -50,6 +50,7 @@ route::post('add_cart/{id}', [HomeController::class, 'add_cart'])->middleware(['
 route::get('mycart', [HomeController::class, 'mycart'])->middleware(['auth', 'verified']);
 route::get('delete_cart/{id}', [HomeController::class, 'delete_cart'])->middleware(['auth', 'verified']);
 route::post('confirm_order', [HomeController::class, 'confirm_order'])->middleware(['auth', 'verified']);
+route::post('showMyOrders', [HomeController::class, 'showMyOrders'])->middleware(['auth', 'verified']);
 
 // Home routes
 route::get('shop', [HomeController::class, 'shop']);

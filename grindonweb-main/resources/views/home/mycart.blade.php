@@ -78,6 +78,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
             box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 20px; /* Adjust this value as needed */
         }
 
         /* Hover Effect for Button */
@@ -202,7 +203,7 @@
     <div class="div_deg">
         @if(count($cart) > 0) <!-- Only show order form if cart is not empty -->
         <!-- Order Form -->
-        <<div class="order_deg">
+        <div class="order_deg">
     <h3 style="text-align:center; color: #333;">Place Your Order</h3>
     <form action="{{ url('confirm_order') }}" method="POST" id="orderForm">
         @csrf
@@ -254,7 +255,7 @@
                             <th>Product Title</th>
                             <th>Price</th>
                             <th>Size</th>
-                            <th>Color</th>
+                            <th>Logo</th>
                             <th>Quantity</th>
                             <th>Image</th>
                             <th>Remove</th>
@@ -270,7 +271,7 @@
                                 <td>{{ $cart->product->title }}</td>
                                 <td>PHP {{ number_format($cart->product->price, 2) }}</td>
                                 <td>{{ $cart->size }}</td>
-                                <td>{{ $cart->color }}</td>
+                                <td>{{ $cart->logo }}</td>
                                 <td>{{ $cart->quantity }}</td>
                                 <td>
                                     <img src="/products/{{ $cart->product->image }}" alt="{{ $cart->product->title }}">
@@ -307,14 +308,14 @@
         @endif
     </div>
 
-   <!-- Gcash Payment Modal -->
+<!-- Gcash Payment Modal -->
 <div id="gcash-modal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">×</span>
         <h3>Gcash Payment Details</h3>
         <p>Please transfer the amount to the following Gcash details:</p>
-        <p><strong>Account Number:</strong> 0917-xxxx-xxxx</p>
-        <p><strong>Account Name:</strong> Your Company Name</p>
+        <p><strong>Account Number:</strong> 0976 405 6887</p>
+        <p><strong>Account Name:</strong> Grind On</p>
         <p><strong>Amount:</strong> PHP <span id="gcash-amount"></span></p>
         <label for="reference_number">Reference Number:</label>
         <input type="text" id="reference_number" name="reference_number" placeholder="Enter reference number">
@@ -336,8 +337,8 @@
     const paymentMethod = paymentMethodInput.value;
 
     if (paymentMethod === "gcash") {
-        const totalAmount = parseFloat(document.getElementById('total-price').textContent.replace('PHP', ''));
-        document.getElementById('gcash-amount').textContent = totalAmount.toFixed(2);
+        // Update the total amount calculation
+        updateTotalForGcash();  // Ensure the total is calculated for Gcash
         document.getElementById('gcash-modal').style.display = "flex";
         return;
     }
@@ -365,24 +366,31 @@ function submitOrder() {
     document.getElementById("orderForm").submit();
 }
 
-    function closeModal() {
-        document.getElementById('gcash-modal').style.display = "none";
-    }
+function closeModal() {
+    document.getElementById('gcash-modal').style.display = "none";
+}
 
-    function updateTotal() {
-        let total = 0;
-        // Get all checked checkboxes and update the total
-        const checkboxes = document.querySelectorAll('.item-checkbox');
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                const price = parseFloat(checkbox.getAttribute('data-price'));
-                const quantity = parseInt(checkbox.getAttribute('data-quantity'));
-                total += price * quantity;
-            }
-        });
-        // Update the total value in the DOM
-        document.getElementById('total-price').textContent = 'PHP' + total.toFixed(2);
-    }
+function updateTotalForGcash() {
+    let total = 0;
+    // Get all checked checkboxes and calculate the total dynamically
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            const price = parseFloat(checkbox.getAttribute('data-price'));
+            const quantity = parseInt(checkbox.getAttribute('data-quantity'));
+            total += price * quantity;
+        }
+    });
+
+    // Update the total value in the DOM and also set it for the Gcash modal
+    document.getElementById('total-price').textContent = 'PHP ' + total.toFixed(2);
+    document.getElementById('gcash-amount').textContent = total.toFixed(2);
+}
+
+const checkboxes = document.querySelectorAll('.item-checkbox');
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', updateTotalForGcash);  // Ensure total is updated when a checkbox is clicked
+});
 </script>
 
 

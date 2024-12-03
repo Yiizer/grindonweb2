@@ -20,7 +20,7 @@ return new class extends Migration
 
             // New fields for size, color, and quantity
             $table->string('size'); // Example: Small, Medium, Large
-            $table->string('color'); // Example: Black, White
+            $table->string('logo'); // Example: Black, White
             $table->integer('quantity')->default(1); // Quantity of the product in the cart
             $table->decimal('price', 8, 2); // Price of the product for this cart entry
 

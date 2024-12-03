@@ -101,6 +101,11 @@ input[type='search'] {
     margin-right: 10px; /* Space between search box and button */
 }
 
+/* Adjust button vertical positioning */
+.actions .btn {
+    margin-top: -10px; /* Adjust this value as needed */
+}
+
 
     </style>
 
@@ -144,7 +149,7 @@ input[type='search'] {
         <tr>
             <td>{{ $item->id }}</td>
             <td>{{ $item->title }}</td>
-            <td>{{ $item->description }}</td>
+            <td>{!!Str::limit($item->description,50)!!}</td>
             <td>PHP {{ number_format($item->price, 2) }}</td>
             <td>{{ $item->category }}</td>
             <td>{{ $item->small }}</td>
