@@ -160,7 +160,7 @@
 /* Close Button */
 .close-button {
     position: absolute;
-    top: 190px; /* Move it a little lower */
+    top: 90px; /* Move it a little lower */
     right: 600px; /* Move it a little to the left */
     font-size: 30px;
     color: black;
@@ -175,7 +175,7 @@
 }
 
 #modalImage.move-down {
-    margin-top: 200px; /* Move the image down by 20px when clicked */
+    margin-top: 100px; /* Move the image down by 20px when clicked */
     transition: margin-top 0.3s ease; /* Smooth transition */
 }
 
