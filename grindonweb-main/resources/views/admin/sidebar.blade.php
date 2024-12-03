@@ -4,14 +4,35 @@
       
       <nav id="sidebar">
         <!-- Sidebar Header-->
-        <div class="sidebar-header d-flex align-items-center">
-          <div class="avatar"><img src="{{asset('admincss/img/avatar-6.jpg')}}" alt="..." class="img-fluid rounded-circle"></div>
-          <div class="title">
-            <h1 class="h5">Admin</h1>
-            <p>CEO</p>
-          </div>
-        </div>
-        <!-- Sidebar Navidation Menus--><span class="heading" style="color: white;">Main</span>
+        <div class="sidebar-header d-flex align-items-center justify-content-center">
+    <div class="avatar">
+        <img src="{{asset('admincss/img/avatar-6.jpg')}}" alt="..." class="img-fluid rounded-circle">
+    </div>
+    <div class="title text-center">
+        <h1 class="h5">Admin</h1>
+        <p>CEO</p>
+    </div>
+</div>
+
+<style type="text/css">
+
+.sidebar-header {
+    display: flex;
+    justify-content: center; /* Keep it centered */
+    align-items: center; /* Align items vertically */
+    margin-left: -10px; /* Move the whole header slightly to the left */
+}
+
+.sidebar-header .title {
+    text-align: center; /* Center the text */
+    margin-left: -10px; /* Optional: Add some space between the avatar and text */
+}
+
+
+
+</style>
+        <span class="heading" style="color: white; margin-top: 10px;">Main</span>
+
         <ul class="list-unstyled">
                 <li><a href="{{url('admin/dashboard')}}"> <i class="icon-home"></i>Home </a></li>
                 <li>

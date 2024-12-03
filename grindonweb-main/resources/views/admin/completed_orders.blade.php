@@ -7,12 +7,16 @@
     <style type="text/css">
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #555;
+        }
+
+        .admin{
+            background-color: rgb(34, 37, 42, 255);
         }
 
         .page-content {
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #555;
             border-radius: 8px;
             box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
             margin: 20px auto;
@@ -111,7 +115,7 @@
     </style>
 </head>
 
-<body>
+<body class="admin">
     @include('admin.header')
     @include('admin.sidebar')
 
@@ -130,7 +134,7 @@
                         <th>Product Title</th>
                         <th>Price</th>
                         <th>Size</th>
-                        <th>Color</th>
+                        <th>Logo</th>
                         <th>Quantity</th>
                         <th>Image</th>
                         <th>Payment Method</th>
@@ -145,9 +149,9 @@
                             <td>{{ $order->rec_address }}</td>
                             <td>{{ $order->phone }}</td>
                             <td>{{ $order->product->title }}</td>
-                            <td>${{ number_format($order->product->price * $order->quantity, 2) }}</td>
-                            <td>{{ $order->size }}</td>
-                            <td>{{ $order->color }}</td>
+                            <td>PHP {{ number_format($order->product->price * $order->quantity, 2) }}</td>
+                            <td>{{ ucfirst($order->size) }}</td>
+                            <td>{{ $order->logo }}</td>
                             <td>{{ $order->quantity }}</td>
                             <td>
                                 <img src="products/{{ $order->product->image }}" alt="Product Image">

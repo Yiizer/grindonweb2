@@ -17,7 +17,7 @@ class Order extends Model
         'rec_address',
         'phone',
         'size',
-        'color',
+        'logo',
         'quantity',
         'status',
         'payment_method',

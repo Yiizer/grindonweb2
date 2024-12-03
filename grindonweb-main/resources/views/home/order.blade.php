@@ -95,7 +95,7 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Size</th>
-                        <th>Color</th>
+                        <th>Logo</th>
                         <th>Delivery Status</th>
                         <th>Image</th>
                         <th>Total Price</th>
@@ -111,8 +111,8 @@
                             <td>{{ $order->product->title }}</td>
                             <td>PHP{{ number_format($order->product->price, 2) }}</td>
                             <td>{{ $order->quantity }}</td>
-                            <td>{{ $order->size }}</td>
-                            <td>{{ $order->color }}</td>
+                            <td>{{ ucfirst($order->size) }}</td>
+                            <td>{{ $order->logo }}</td>
                             <td>
                                 @if($order->status == 'Delivered')
                                 <span style="color:green;">{{ $order->status }}</span>

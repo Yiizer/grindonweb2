@@ -290,10 +290,14 @@
 
                         <!-- Color Selection -->
                         <div class="form-group">
-                            <label for="color">Color</label>
-                            <select name="color" id="color" required>
-                                <option value="Black" {{ old('color') == 'Black' ? 'selected' : '' }}>Black</option>
-                                <option value="White" {{ old('color') == 'White' ? 'selected' : '' }}>White</option>
+                            <label for="logo">Logo</label>
+                            <select name="logo" id="logo" required>
+                                <option value="Vneck" {{ old('logo') == 'Vneck' ? 'selected' : '' }}>Vneck</option>
+                                <option value="Vneck + 1 Logo" {{ old('logo') == 'Vneck + 1 Logo' ? 'selected' : '' }}>Vneck + 1 Logo</option>
+                                <option value="Esports" {{ old('logo') == 'Esports' ? 'selected' : '' }}>Esports</option>
+                                <option value="Esports + 1 Logo" {{ old('logo') == 'Esports + 1 Logo' ? 'selected' : '' }}>Esports + 1 Logo</option>
+                                <option value="Zip Collar" {{ old('logo') == 'Zip Collar' ? 'selected' : '' }}>Zip Collar</option>
+                                <option value="Zip Collar + 1 Logo" {{ old('logo') == 'Zip Collar + 1 Logo' ? 'selected' : '' }}>Zip Collar + 1 Logo</option>
                             </select>
                         </div>
 
