@@ -10,6 +10,10 @@
             background-color: #555;
         }
 
+        .admin{
+            background-color: rgb(34, 37, 42, 255);
+        }
+
         .page-content {
             padding: 20px;
             background-color: #555;
@@ -111,7 +115,7 @@
     </style>
 </head>
 
-<body>
+<body class="admin">
     @include('admin.header')
     @include('admin.sidebar')
 
