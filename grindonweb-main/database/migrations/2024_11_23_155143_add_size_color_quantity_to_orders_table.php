@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->string('size')->nullable();
-            $table->string('color')->nullable();
+            $table->string('logo')->nullable();
             $table->integer('quantity')->default(1);
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn(['size', 'color', 'quantity']);
+            $table->dropColumn(['size', 'logo', 'quantity']);
         });
     }
     
