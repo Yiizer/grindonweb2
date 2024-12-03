@@ -12,6 +12,9 @@ use App\Models\Product;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 
+use Illuminate\Support\Facades\Storage;
+
+
 class AdminController extends Controller
 {
     public function view_category()
@@ -71,6 +74,7 @@ class AdminController extends Controller
         return view('admin.add_product',compact('category'));
     }
 
+
     public function upload_product(Request $request)
     {
         // Validate the input
@@ -84,19 +88,16 @@ class AdminController extends Controller
             'large' => 'required|integer|min:0',
             'x_small' => 'required|integer|min:0',
             'x_large' => 'required|integer|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
     
         // Create a new product
         $data = new Product();
-    
-        // Assign the input values
         $data->title = $request->title;
         $data->description = $request->description;
         $data->price = $request->price;
         $data->category = $request->category;
-    
-        // Assign specific quantities
         $data->small = $request->small;
         $data->medium = $request->medium;
         $data->large = $request->large;
@@ -104,11 +105,21 @@ class AdminController extends Controller
         $data->x_large = $request->x_large;
     
         // Handle image upload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imagename = time() . '.' . $image->getClientOriginalExtension();
-            $image->move('products', $imagename);
-            $data->image = $imagename;
+        if ($request->hasFile('images') && is_array($request->file('images'))) {
+            $images = $request->file('images');
+            $imageNames = [];
+    
+            foreach ($images as $image) {
+                // Generate a unique file name and store it in the public/images/products folder
+                $imageName = time() . '_' . rand() . '.jpg';
+                // Store the image in the 'public/images/products' folder
+                $image->move(public_path('images/products'), $imageName);  // Store in public/images/products/
+                // Save the relative path to the image
+                $imageNames[] = 'images/products/' . $imageName;
+            }
+    
+            // Save all image names as JSON
+            $data->image = json_encode($imageNames);
         }
     
         // Save the product to the database
@@ -117,17 +128,24 @@ class AdminController extends Controller
         // Show success message
         toastr()->timeOut(10000)->closeButton()->addSuccess('Product Added Successfully');
     
-        // Redirect back to the form
         return redirect()->back();
     }
     
+
+    
+
+    
+    
+    
+    
+
+
     public function view_product()
     {
         $product = Product::paginate(3);
         return view('admin.view_product', compact('product'));
     }
     
-
     public function delete_product($id)
 {
     $data = Product::find($id);
@@ -186,6 +204,8 @@ class AdminController extends Controller
     // Return the update page view with data and category
     return view('admin.update_page', compact('data', 'category'));
 }
+
+
 // Update the product in the database
 public function update_product(Request $request, $id)
 {
@@ -195,18 +215,22 @@ public function update_product(Request $request, $id)
         'description' => 'required|string',
         'price' => 'required|numeric',
         'category' => 'required|string',
-        'small' => 'required|integer',
-        'medium' => 'required|integer',
-        'large' => 'required|integer',
-        'x_small' => 'required|integer',
-        'x_large' => 'required|integer',
-        'image' => 'nullable|image', // Optional image upload
+        'small' => 'required|integer|min:0',
+        'medium' => 'required|integer|min:0',
+        'large' => 'required|integer|min:0',
+        'x_small' => 'required|integer|min:0',
+        'x_large' => 'required|integer|min:0',
+        'images' => 'nullable|array',
+        'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'delete_images' => 'nullable|array',
+        'replace_images' => 'nullable|array',
+        'replace_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
     // Find the product by ID
     $product = Product::findOrFail($id);
 
-    // Update product details
+    // Update basic product details
     $product->title = $validated['title'];
     $product->description = $validated['description'];
     $product->price = $validated['price'];
@@ -217,18 +241,69 @@ public function update_product(Request $request, $id)
     $product->x_small = $validated['x_small'];
     $product->x_large = $validated['x_large'];
 
-    // Handle the image upload if a new image is provided
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('products', 'public'); // Store image in 'products' directory
-        $product->image = $imagePath;
+    // Get current product images (if any)
+    $currentImages = json_decode($product->image, true) ?: [];
+
+    // Handle image deletion
+    if ($request->has('delete_images') && is_array($validated['delete_images'])) {
+        foreach ($validated['delete_images'] as $index => $delete) {
+            if ($delete == '1' && isset($currentImages[$index])) {
+                // Delete the image from storage
+                $currentImagePath = public_path($currentImages[$index]);
+                if (file_exists($currentImagePath)) {
+                    unlink($currentImagePath); // Delete the image from the public folder
+                }
+                unset($currentImages[$index]); // Remove from the array
+            }
+        }
     }
+
+    // Handle image replacements
+    if ($request->hasFile('replace_images') && is_array($request->file('replace_images'))) {
+        foreach ($request->file('replace_images') as $index => $newImage) {
+            if (isset($currentImages[$index])) {
+                // Delete the old image from storage
+                $currentImagePath = public_path($currentImages[$index]);
+                if (file_exists($currentImagePath)) {
+                    unlink($currentImagePath); // Delete the old image
+                }
+
+                // Store the new image and replace it in the array
+                $newImageName = time() . '_' . rand() . '.jpg'; // Generate a unique filename
+                $newImage->move(public_path('images/products'), $newImageName); // Store in 'public/images/products'
+                $currentImages[$index] = 'images/products/' . $newImageName; // Save the relative path
+            }
+        }
+    }
+
+    // Handle new image uploads
+    if ($request->hasFile('images') && is_array($request->file('images'))) {
+        foreach ($request->file('images') as $image) {
+            // Generate a unique name for each new image
+            $newImageName = time() . '_' . rand() . '.jpg';
+            $image->move(public_path('images/products'), $newImageName);  // Store in 'public/images/products'
+            $currentImages[] = 'images/products/' . $newImageName; // Save the relative path
+        }
+    }
+
+    // Update the image field (save the image paths in JSON format)
+    $product->image = !empty($currentImages) ? json_encode(array_values($currentImages)) : null;
 
     // Save the updated product
     $product->save();
 
-    // Redirect with success message
+    // Redirect with a success message
     return redirect('view_product')->with('success', 'Product Updated Successfully');
 }
+
+
+
+
+
+
+
+
+
 
 
     public function view_orders()
