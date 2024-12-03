@@ -166,44 +166,57 @@
                 </thead>
                 <tbody>
     @foreach($data as $order)
-        <tr>
-            <td>{{ $order->name }}</td>
-            <td>{{ $order->rec_address }}</td>
-            <td>{{ $order->phone }}</td>
-            <td>{{ $order->product->title }}</td>
-            <td>PHP {{ number_format($order->product->price * $order->quantity, 2) }}</td>
-            <td>{{ $order->size }}</td>
-            <td>{{ $order->logo }}</td>
-            <td>{{ $order->quantity }}</td>
-            <td>
-                <img src="products/{{ $order->product->image }}" alt="Product Image">
-            </td>
-            <td>{{ $order->payment_method }}</td>
-            <!-- Show reference number only for GCash -->
-            <td>
-                @if($order->payment_method == 'gcash' && $order->reference_number)
-                    <strong>Reference Number:</strong> {{ $order->reference_number }}
-                @else
-                    N/A
-                @endif
-            </td>
-            <td>
-                @if($order->status == 'in progress')
-                    <span style="color:yellow">{{ $order->status }}</span>
-                @elseif($order->status == 'On the Way')
-                    <span style="color:skyblue; background-color:transparent;">{{ $order->status }}</span>
-                @elseif($order->status == 'Delivered')
-                    <span style="color:green">{{ $order->status }}</span>
-                @endif
-            </td>
-            <td>
-                <a class="btn btn-primary" href="{{ url('on_the_way', $order->id) }}">On The Way</a>
-                <a class="btn btn-success" href="{{ url('delivered', $order->id) }}">Delivered</a>
-            </td>
-            <td>
-                <a class="btn btn-secondary" href="{{ url('print_pdf', $order->id) }}">Print PDF</a>
-            </td>
-        </tr>
+    <tr>
+    <td>{{ $order->name }}</td>
+    <td>{{ $order->rec_address }}</td>
+    <td>{{ $order->phone }}</td>
+    <td>{{ $order->product->title }}</td>
+    <td>PHP {{ number_format($order->product->price * $order->quantity, 2) }}</td>
+    <td>{{ $order->size }}</td>
+    <td>{{ $order->logo }}</td>
+    <td>{{ $order->quantity }}</td>
+    <td>
+        @if($order->product->image)
+            @php
+                $images = json_decode($order->product->image); // Decode the JSON string to get an array of image paths
+            @endphp
+            @if(is_array($images) && count($images) > 0)
+                <!-- Show only the first image as thumbnail -->
+                <img src="{{ asset(str_replace('\\/', '/', $images[0])) }}" alt="Product Image" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+            @else
+                <img src="{{ asset('images/products/default-image.jpg') }}" alt="No Image" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+            @endif
+        @else
+            <img src="{{ asset('images/products/default-image.jpg') }}" alt="No Image" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+        @endif
+    </td>
+    <td>{{ $order->payment_method }}</td>
+    <!-- Show reference number only for GCash -->
+    <td>
+        @if($order->payment_method == 'gcash' && $order->reference_number)
+            <strong>Reference Number:</strong> {{ $order->reference_number }}
+        @else
+            N/A
+        @endif
+    </td>
+    <td>
+        @if($order->status == 'in progress')
+            <span style="color:yellow">{{ $order->status }}</span>
+        @elseif($order->status == 'On the Way')
+            <span style="color:skyblue; background-color:transparent;">{{ $order->status }}</span>
+        @elseif($order->status == 'Delivered')
+            <span style="color:green">{{ $order->status }}</span>
+        @endif
+    </td>
+    <td>
+        <a class="btn btn-primary" href="{{ url('on_the_way', $order->id) }}">On The Way</a>
+        <a class="btn btn-success" href="{{ url('delivered', $order->id) }}">Delivered</a>
+    </td>
+    <td>
+        <a class="btn btn-secondary" href="{{ url('print_pdf', $order->id) }}">Print PDF</a>
+    </td>
+</tr>
+
     @endforeach
 </tbody>
 
