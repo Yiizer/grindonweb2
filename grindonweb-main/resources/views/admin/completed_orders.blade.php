@@ -137,6 +137,7 @@
                         <th>Logo</th>
                         <th>Quantity</th>
                         <th>Image</th>
+                        <th>Ref#</th>
                         <th>Payment Method</th>
                         <th>Status</th>
                         <th>Print PDF</th>
@@ -155,6 +156,13 @@
                             <td>{{ $order->quantity }}</td>
                             <td>
                                 <img src="products/{{ $order->product->image }}" alt="Product Image">
+                            </td>
+                            <td>
+                                @if($order->payment_method == 'gcash' && $order->reference_number)
+                                    <strong>Reference Number:</strong> {{ $order->reference_number }}
+                                @else
+                                    N/A
+                                @endif
                             </td>
                             <td>{{ $order->payment_method }}</td>
                             <td><span style="color:green">{{ $order->status }}</span></td>
