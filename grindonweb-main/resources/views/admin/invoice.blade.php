@@ -95,7 +95,7 @@
                 <p><strong>Price:</strong> PHP {{ $data->product->price }}</p>
                 <p><strong>Quantity:</strong> {{ $data->quantity }}</p>
                 <p><strong>Size:</strong> {{ $data->size }}</p>
-                <p><strong>Color:</strong> {{ $data->color }}</p>
+                <p><strong>Logo:</strong> {{ $data->logo }}</p>
                 <p><strong>Total:</strong> PHP {{ $data->quantity * $data->product->price }}</p>
             </div>
         </div>
