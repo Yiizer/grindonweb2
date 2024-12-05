@@ -245,14 +245,7 @@
 
 
 
-                            <td class="actions">
-                                <a href="{{ url('edit_product', $item->id) }}" class="btn btn-edit">Edit</a>
-                                <form action="{{ url('delete_product', $item->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
-                                </form>
-                            </td>
+                            
                         </tr>
                         @endforeach
                     </tbody>
