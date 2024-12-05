@@ -110,7 +110,7 @@ class HomeController extends Controller
         // Validate input for quantity, size, and color
         $request->validate([
             'size' => 'required|string|in:small,medium,large,x_small,x_large', // Validate size input
-            'color' => 'required|string', // Validate color input
+            'logo' => 'required|string', // Validate color input
             'quantity' => 'required|integer|min:1|max:' . $this->getAvailableStockForSize($product, $request->input('size')), // Validate quantity input
         ]);
     
@@ -120,7 +120,7 @@ class HomeController extends Controller
     
         // Get the size, color, and quantity from the request
         $size = $request->input('size');
-        $color = $request->input('color');
+        $logo = $request->input('logo');
         $quantity = $request->input('quantity');
     
         // Check if requested quantity is available for the selected size
@@ -132,7 +132,7 @@ class HomeController extends Controller
         $existingCart = Cart::where('user_id', $user_id)
                             ->where('product_id', $product->id)
                             ->where('size', $size)
-                            ->where('color', $color)
+                            ->where('logo', $logo)
                             ->first();
     
         // If the product is already in the cart, update the quantity
@@ -145,7 +145,7 @@ class HomeController extends Controller
             $data->user_id = $user_id;
             $data->product_id = $product->id;
             $data->size = $size;
-            $data->color = $color;
+            $data->logo = $logo;
             $data->quantity = $quantity;
             $data->price = $product->price;
             $data->save();
@@ -226,7 +226,6 @@ class HomeController extends Controller
             return redirect()->back();
         }
     
-        
         DB::beginTransaction();
     
         try {
@@ -262,11 +261,21 @@ class HomeController extends Controller
             foreach ($cart as $carts) {
                 $product = Product::find($carts->product_id);
     
+                // Check if reference number already exists (only for GCash)
+                if ($paymentMethod === 'gcash') {
+                    $existingOrder = Order::where('reference_number', $referenceNumber)->first();
+                    if ($existingOrder) {
+                        DB::rollBack();
+                        toastr()->error("The reference number '{$referenceNumber}' already exists. Please double-check your reference number.");
+                        return redirect()->back();
+                    }
+                }
+    
                 // Create the order
                 $order = new Order;
                 $order->product_id = $carts->product_id;
                 $order->size = $carts->size;
-                $order->color = $carts->color;
+                $order->logo = $carts->logo;
                 $order->quantity = $carts->quantity;
                 $order->name = $name;
                 $order->rec_address = $address;
@@ -317,9 +326,6 @@ class HomeController extends Controller
             return redirect()->back();
         }
     }
-    
-    
-    
 
     public function myorders()
     {

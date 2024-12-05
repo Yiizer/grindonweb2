@@ -74,52 +74,111 @@
             transform: scale(1.05);
             transition: transform 0.3s ease-in-out;
         }
-        /* Modal Styles */
-        .image-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden; /* Prevent scrolling */
-            background-color: rgba(0, 0, 0, 0.9); /* Black background with transparency */
-        }
+ /* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0); /* Transparent background */
+}
 
-        .modal-content {
-            position: absolute;
-            top: 50%; /* Center vertically */
-            left: 50%; /* Center horizontally */
-            transform: translate(-50%, -50%);
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 10px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
-            object-fit: contain; /* Ensures the image maintains its aspect ratio */
-        }   
+.modal-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Remove padding for no background effect */
+    background: none !important; /* Ensure there's absolutely no background */
+    box-shadow: none !important; /* Remove any shadows */
+    border: none; /* Remove borders */
+}
 
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            color: white;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-            z-index: 1100;
-        }
+.modal-content img {
+    width: 80%; /* Resize image to 80% of the screen width */
+    max-width: 800px; /* Ensure the image doesn’t exceed 800px in width */
+    height: auto;
+    border-radius: 8px; /* Optional: adds slight roundness to the image edges */
+    margin-top: 50px; /* Move the image a bit down */
+}
 
-        .close-modal:hover,
-        .close-modal:focus {
-            color: #bbb;
-        }
+.modal-content .modal-buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px; /* Matches image size for consistency */
+}
 
-        /* Hide the header while modal is active */
-        body.modal-open .hero_area {
-            display: none;
-        }
+.modal-content .modal-buttons button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    padding: 10px 20px;
+    transition: color 0.3s ease;
+}
+
+.modal-content .modal-buttons button:hover {
+    color: #ddd;
+}
+
+/* Navigation Arrows */
+.arrow-left, .arrow-right {
+    position: absolute;
+    top: 60%; /* Adjust the top percentage to move the arrows lower */
+    font-size: 40px;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+    padding: 10px;
+}
+
+.arrow-left {
+    left: -50px; /* Move the left arrow closer to the image */
+}
+
+.arrow-right {
+    right: -50px; /* Move the right arrow closer to the image */
+}
+
+.arrow-left:hover, .arrow-right:hover {
+    color: #ddd;
+}
+
+/* Close Button */
+.close-button {
+    position: absolute;
+    top: 90px; /* Move it a little lower */
+    right: 600px; /* Move it a little to the left */
+    font-size: 30px;
+    color: black;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.close-button:hover {
+    color: red;
+}
+
+#modalImage.move-down {
+    margin-top: 100px; /* Move the image down by 20px when clicked */
+    transition: margin-top 0.3s ease; /* Smooth transition */
+}
+
 
 
         /* Product Details */
@@ -130,7 +189,7 @@
 
         .product-details h3 {
             font-size: 32px;
-            color: #fff; /* White color for product title */
+            color: black; /* White color for product title */
             font-weight: 600;
         }
 
@@ -255,9 +314,20 @@
             </div>
 
             <div class="product-detail-card">
-                <!-- Product Image -->
+                <!-- Product Image(s) -->
                 <div class="product-image">
-                    <img src="/products/{{$data->image}}" alt="{{ $data->title }}" id="productImage">
+                    @if($data->image)
+                        @php
+                            $images = json_decode($data->image); // Decode the JSON string to get an array of image paths
+                        @endphp
+                        @if(is_array($images) && count($images) > 0)
+                            <img src="{{ asset($images[0]) }}" alt="{{ $data->title }}" id="productImage" class="thumbnail-image" data-images="{{ json_encode($images) }}" style="cursor: pointer;">
+                        @else
+                            <img src="{{ asset($data->image) }}" alt="{{ $data->title }}" id="productImage" style="cursor: pointer;">
+                        @endif
+                    @else
+                        No Image Available
+                    @endif
                 </div>
 
                 <!-- Product Details -->
@@ -290,10 +360,14 @@
 
                         <!-- Color Selection -->
                         <div class="form-group">
-                            <label for="color">Color</label>
-                            <select name="color" id="color" required>
-                                <option value="Black" {{ old('color') == 'Black' ? 'selected' : '' }}>Black</option>
-                                <option value="White" {{ old('color') == 'White' ? 'selected' : '' }}>White</option>
+                            <label for="logo">Logo</label>
+                            <select name="logo" id="logo" required>
+                                <option value="Vneck" {{ old('logo') == 'Vneck' ? 'selected' : '' }}>Vneck</option>
+                                <option value="Vneck + 1 Logo" {{ old('logo') == 'Vneck + 1 Logo' ? 'selected' : '' }}>Vneck + 1 Logo</option>
+                                <option value="Esports" {{ old('logo') == 'Esports' ? 'selected' : '' }}>Esports</option>
+                                <option value="Esports + 1 Logo" {{ old('logo') == 'Esports + 1 Logo' ? 'selected' : '' }}>Esports + 1 Logo</option>
+                                <option value="Zip Collar" {{ old('logo') == 'Zip Collar' ? 'selected' : '' }}>Zip Collar</option>
+                                <option value="Zip Collar + 1 Logo" {{ old('logo') == 'Zip Collar + 1 Logo' ? 'selected' : '' }}>Zip Collar + 1 Logo</option>
                             </select>
                         </div>
 
@@ -317,42 +391,83 @@
         </div>
     </section>
 
-    <div id="imageModal" class="image-modal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImage">
+    <!-- Modal for Image Preview -->
+    <div class="modal" id="imageModal">
+    <div class="modal-content">
+        <button id="closeModal" class="close-button" onclick="closeModal()">&times;</button> <!-- Close button -->
+        <img id="modalImage" src="" alt="Product Image">
+        <div class="modal-buttons">
+            <button id="prevButton" onclick="changeImage('prev')">&#8592;</button>
+            <button id="nextButton" onclick="changeImage('next')">&#8594;</button>
+        </div>
     </div>
-    <!-- Product Details Section End -->
+</div>
+
 
     @include('home.footer')
 
-    <script>
-        // Get modal elements
-        const modal = document.getElementById('imageModal');
+    <script type="text/javascript">
+document.querySelectorAll('.thumbnail-image').forEach(image => {
+    image.addEventListener('click', function() {
+        const images = JSON.parse(this.getAttribute('data-images')); // Get all images for this product
+        const currentIndex = 0; // Start from the first image
+
+        let modalImage = document.getElementById('modalImage');
+        
+        // Normalize the image path to use forward slashes (if necessary)
+        let imagePath = images[currentIndex].replace(/\\/g, '/'); // Replace backslashes with forward slashes
+        
+        // Set the image src to the first image in the array
+        modalImage.src = "{{ asset('') }}" + imagePath; // Corrected to asset helper without 'storage'
+
+        modalImage.setAttribute('data-index', currentIndex); // Set the current index in the modal image
+        modalImage.setAttribute('data-images', JSON.stringify(images)); // Set the images array in the modal image
+
+        // Apply a class that shifts the image down
+        modalImage.classList.add('move-down');
+        
+        document.getElementById('imageModal').style.display = 'flex'; // Show the modal
+    });
+});
+
+// Close modal when clicking anywhere inside the modal (except the image itself)
+document.getElementById('imageModal').addEventListener('click', function(event) {
+    // Check if the clicked target is the background and not the image
+    if (event.target === this) { // If the target is the modal background (including top, sides, bottom)
+        closeModal();
+    }
+});
+
+// Prevent clicks on the image from closing the modal
+document.getElementById('modalImage').addEventListener('click', function(event) {
+    event.stopPropagation(); // Prevent click event from propagating to the modal (background)
+});
+
+// Close modal function
+function closeModal() {
+    document.getElementById('imageModal').style.display = 'none'; // Hide the modal
+    document.getElementById('modalImage').classList.remove('move-down'); // Reset the image position
+}
+
+
+
+
+
+    function changeImage(direction) {
         const modalImage = document.getElementById('modalImage');
-        const productImage = document.getElementById('productImage');
-        const closeModal = document.querySelector('.close-modal');
-        const body = document.body;
+        const images = JSON.parse(modalImage.getAttribute('data-images')); // Get the array of images
+        let currentIndex = parseInt(modalImage.getAttribute('data-index')); // Get the current image index
 
-        // Open the modal when the product image is clicked
-        productImage.addEventListener('click', () => {
-            modal.style.display = 'block';
-            modalImage.src = productImage.src;
-            body.classList.add('modal-open'); // Hide the header
-        });
+        if (direction === 'next') {
+            currentIndex = (currentIndex + 1) % images.length; // Move to next image
+        } else if (direction === 'prev') {
+            currentIndex = (currentIndex - 1 + images.length) % images.length; // Move to previous image
+        }
 
-        // Close the modal when the close button is clicked
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-            body.classList.remove('modal-open'); // Show the header
-        });
-
-        // Close the modal when clicking outside the modal image
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-                body.classList.remove('modal-open'); // Show the header
-            }
-        });
+        let imagePath = images[currentIndex].replace(/\\/g, '/'); // Replace backslashes with forward slashes
+        modalImage.src = "{{ asset('') }}" + imagePath; // Set the new image source
+        modalImage.setAttribute('data-index', currentIndex); // Update the current index
+    }
 
         // Update the displayed available stock based on the selected size
         function updateStock() {
@@ -387,7 +502,7 @@
             updateStock();
         });
     </script>
-
 </body>
+
 
 </html>

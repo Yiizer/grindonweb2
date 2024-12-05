@@ -95,7 +95,7 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Size</th>
-                        <th>Color</th>
+                        <th>Logo</th>
                         <th>Delivery Status</th>
                         <th>Image</th>
                         <th>Total Price</th>
@@ -111,14 +111,36 @@
                             <td>{{ $order->product->title }}</td>
                             <td>PHP{{ number_format($order->product->price, 2) }}</td>
                             <td>{{ $order->quantity }}</td>
-                            <td>{{ $order->size }}</td>
-                            <td>{{ $order->color }}</td>
-                            <td>{{ $order->status }}</td>
+                            <td>{{ ucfirst($order->size) }}</td>
+                            <td>{{ $order->logo }}</td>
                             <td>
-                                <img src="products/{{ $order->product->image }}" alt="{{ $order->product->title }}">
+                                @if($order->status == 'Delivered')
+                                <span style="color:green;">{{ $order->status }}</span>
+                                @elseif($order->status == 'in progress')
+                                <span style="color:yellow;">{{ $order->status }}</span>
+                                @else
+                                <span>{{ $order->status }}</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($order->product->image)
+                                    @php
+                                        $images = json_decode($order->product->image); // Decode the JSON string to get an array of image paths
+                                    @endphp
+                                    @if(is_array($images) && count($images) > 0)
+                                        <!-- Only show the first image as thumbnail -->
+                                        <img src="{{ asset(str_replace('\\/', '/', $images[0])) }}" alt="{{ $order->product->title }}" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+                                    @else
+                                        <img src="{{ asset('images/products/default-image.jpg') }}" alt="No Image" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+                                    @endif
+                                @else
+                                    <img src="{{ asset('images/products/default-image.jpg') }}" alt="No Image" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+                                @endif
                             </td>
                             <td>PHP{{ number_format($order_total, 2) }}</td>
                         </tr>
+
+
                     @endforeach
                 </tbody>
             </table>

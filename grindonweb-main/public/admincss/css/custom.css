@@ -1,1 +1,8 @@
-/* your styles go here */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("font-awesome.min.css");
+
+body {
+    font-family: Arial, sans-serif;
+    color: #101010;
+    background-color: rgb(34, 37, 42, 255);
+}

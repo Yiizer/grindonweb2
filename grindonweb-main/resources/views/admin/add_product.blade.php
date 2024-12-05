@@ -193,7 +193,7 @@
                 </div>
                 <div class="form-row">
                     <label>Product Image</label>
-                    <input type="file" name="image">
+                    <input type="file" name="images[]" multiple>
                 </div>
                 <div class="form-row1">
                     <button class="btn" type="submit">Add Product</button>

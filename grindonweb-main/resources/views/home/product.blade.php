@@ -1,36 +1,3 @@
-<section class="shop_section layout_padding">
-  <div class="container">
-    <div class="heading_container heading_center">
-      <h2>
-        Latest Products
-      </h2>
-    </div>
-    <div class="row">
-      @foreach($product as $products)
-      <div class="col-sm-6 col-md-4 col-lg-3">
-        <!-- Entire product card is now clickable -->
-        <a href="{{ url('product_details', $products->id) }}" class="product-link" style="text-decoration: none; color: inherit;">
-          <div class="box" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
-            <div class="img-box">
-              <img src="products/{{ $products->image }}" alt="Product Image" style="width: 100%; border-radius: 5px;">
-            </div>
-            <div class="detail-box" style="padding: 15px;">
-              <h6>{{ $products->title }}</h6>
-              <h6>Price:
-                <span>
-                  PHP {{ $products->price }}
-                </span>
-              </h6>
-            </div>
-          </div>
-        </a>
-        <!-- "Add to Cart" button remains functional -->
-        
-      </div>
-      @endforeach
-    </div>
-  </div>
-</section>
 
 <style>
   .box {
@@ -87,5 +54,53 @@
     font-weight: bold; /* Make the price bold for emphasis */
   }
 </style>
+
+<section class="shop_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>
+        All Products
+      </h2>
+    </div>
+    <div class="row">
+      @foreach($product as $products)
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <!-- Entire product card is now clickable -->
+        <a href="{{ url('product_details', $products->id) }}" class="product-link" style="text-decoration: none; color: inherit;">
+          <div class="box" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+            <div class="img-box">
+              @if($products->image)
+                @php
+                  $images = json_decode($products->image); // Decode the JSON to get the array of images
+                @endphp
+                @if(is_array($images) && count($images) > 0)
+                  <!-- Display the first image as the thumbnail -->
+                  <img src="{{ asset($images[0]) }}" alt="Product Image" style="width: 100%; border-radius: 5px;">
+                @else
+                  <img src="{{ asset('default-image.jpg') }}" alt="Default Image" style="width: 100%; border-radius: 5px;">
+                @endif
+              @else
+                <img src="{{ asset('default-image.jpg') }}" alt="Default Image" style="width: 100%; border-radius: 5px;">
+              @endif
+            </div>
+            <div class="detail-box" style="padding: 15px;">
+              <h6>{{ $products->title }}</h6>
+              <h6>Price:
+                <span>
+                  PHP {{ number_format($products->price, 2) }}
+                </span>
+              </h6>
+            </div>
+          </div>
+        </a>
+        <!-- "Add to Cart" button remains functional -->
+        
+      </div>
+      @endforeach
+    </div>
+  </div>
+</section>
+
+
 
 

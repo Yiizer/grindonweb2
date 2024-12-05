@@ -27,9 +27,10 @@
           </div>
         </a>
         <!-- Sidebar Toggle Btn-->
-        <button class="sidebar-toggle" style="color: white; background-color: #444; border: none; padding: 10px; cursor: pointer;">
-          <i class="fa fa-long-arrow-left"></i>
-        </button>
+        <button class="sidebar-toggle" style="color: white; background-color: #444; border: none; padding: 0; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; line-height: 0;">
+  <i class="fa fa-long-arrow-left" style="font-size: 18px;"></i>
+</button>
+
       </div>
 
       <!-- Logout as Icon -->

@@ -78,6 +78,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
             box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 20px; /* Adjust this value as needed */
         }
 
         /* Hover Effect for Button */
@@ -160,7 +161,7 @@
         .no-items-message {
             text-align: center;
             font-size: 18px;
-            color: #666;
+            color: black;
         }
 
         /* Gcash Modal Style */
@@ -203,42 +204,45 @@
         @if(count($cart) > 0) <!-- Only show order form if cart is not empty -->
         <!-- Order Form -->
         <div class="order_deg">
-            <h3 style="text-align:center; color: #333;">Place Your Order</h3>
-            <form action="{{ url('confirm_order') }}" method="POST" id="orderForm">
-                @csrf
+    <h3 style="text-align:center; color: #333;">Place Your Order</h3>
+    <form action="{{ url('confirm_order') }}" method="POST" id="orderForm">
+        @csrf
 
-                <div class="div_gap">
-                    <label>Receiver Name</label>
-                    <input type="text" name="name" value="{{ Auth::user()->name }}">
-                </div>
-
-                <div class="div_gap">
-                    <label>Receiver Address</label>
-                    <textarea name="address">{{ Auth::user()->address }}</textarea>
-                </div>
-
-                <div class="div_gap">
-                    <label>Receiver Phone</label>
-                    <input type="text" name="phone" value="{{ Auth::user()->phone }}">
-                </div>
-
-                <div class="div_gap">
-                    <input class="btn btn-place-order" type="button" value="Place Order" onclick="confirm_order()">
-                </div>
-
-                <div class="div_gap">
-                    <label>Select Payment Method:</label>
-                    <div>
-                        <input type="radio" id="cash_on_delivery" name="payment_method" value="cash_on_delivery">
-                        <label for="cash_on_delivery">Cash on Delivery</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="gcash" name="payment_method" value="gcash">
-                        <label for="gcash">GCash</label>
-                    </div>
-                </div>
-            </form>
+        <div class="div_gap">
+            <label>Receiver Name</label>
+            <input type="text" name="name" value="{{ Auth::user()->name }}">
         </div>
+
+        <div class="div_gap">
+            <label>Receiver Address</label>
+            <textarea name="address">{{ Auth::user()->address }}</textarea>
+        </div>
+
+        <div class="div_gap">
+            <label>Receiver Phone</label>
+            <input type="text" name="phone" value="{{ Auth::user()->phone }}">
+        </div>
+
+        <!-- Swapped: Payment Method Section Comes First -->
+        <div class="div_gap">
+            <label>Select Payment Method:</label>
+            <div>
+                <input type="radio" id="cash_on_delivery" name="payment_method" value="cash_on_delivery">
+                <label for="cash_on_delivery">Cash on Delivery</label>
+            </div>
+            <div>
+                <input type="radio" id="gcash" name="payment_method" value="gcash">
+                <label for="gcash">GCash</label>
+            </div>
+        </div>
+
+        <!-- Swapped: Place Order Button Comes After Payment Method -->
+        <div class="div_gap">
+            <input class="btn btn-place-order" type="button" value="Place Order" onclick="confirm_order()">
+        </div>
+    </form>
+</div>
+
         @endif
 
         <!-- Cart Table -->
@@ -251,7 +255,7 @@
                             <th>Product Title</th>
                             <th>Price</th>
                             <th>Size</th>
-                            <th>Color</th>
+                            <th>Logo</th>
                             <th>Quantity</th>
                             <th>Image</th>
                             <th>Remove</th>
@@ -260,22 +264,37 @@
                     <tbody id="cart-items">
                         <?php $total = 0; ?>
                         @foreach ($cart as $cart)
-                            <tr>
-                                <td>
-                                    <input type="checkbox" class="item-checkbox" data-price="{{ $cart->product->price }}" data-quantity="{{ $cart->quantity }}" checked onclick="updateTotal()">
-                                </td>
-                                <td>{{ $cart->product->title }}</td>
-                                <td>PHP {{ number_format($cart->product->price, 2) }}</td>
-                                <td>{{ $cart->size }}</td>
-                                <td>{{ $cart->color }}</td>
-                                <td>{{ $cart->quantity }}</td>
-                                <td>
-                                    <img src="/products/{{ $cart->product->image }}" alt="{{ $cart->product->title }}">
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger" href="{{ url('delete_cart', $cart->id) }}">Remove</a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="item-checkbox" data-price="{{ $cart->product->price }}" data-quantity="{{ $cart->quantity }}" checked onclick="updateTotal()">
+                            </td>
+                            <td>{{ $cart->product->title }}</td>
+                            <td>PHP {{ number_format($cart->product->price, 2) }}</td>
+                            <td>{{ $cart->size }}</td>
+                            <td>{{ $cart->logo }}</td>
+                            <td>{{ $cart->quantity }}</td>
+                            <td>
+                                @if($cart->product->image)
+                                    @php
+                                        $images = json_decode($cart->product->image); // Decode the JSON string to get an array of image paths
+                                    @endphp
+                                    @if(is_array($images) && count($images) > 0)
+                                        <!-- Only show the first image as thumbnail -->
+                                        <img src="{{ asset(str_replace('\\/', '/', $images[0])) }}" alt="{{ $cart->product->title }}" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+                                    @else
+                                        <img src="{{ asset('images/products/default-image.jpg') }}" alt="No Image" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+                                    @endif
+                                @else
+                                    <img src="{{ asset('images/products/default-image.jpg') }}" alt="No Image" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+                                @endif
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="{{ url('delete_cart', $cart->id) }}">Remove</a>
+                            </td>
+                        </tr>
+
+
+
                             <?php $total += $cart->product->price * $cart->quantity; ?>
                         @endforeach
                     </tbody>
@@ -304,14 +323,14 @@
         @endif
     </div>
 
-   <!-- Gcash Payment Modal -->
+<!-- Gcash Payment Modal -->
 <div id="gcash-modal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">×</span>
         <h3>Gcash Payment Details</h3>
         <p>Please transfer the amount to the following Gcash details:</p>
-        <p><strong>Account Number:</strong> 0917-xxxx-xxxx</p>
-        <p><strong>Account Name:</strong> Your Company Name</p>
+        <p><strong>Account Number:</strong> 0976 405 6887</p>
+        <p><strong>Account Name:</strong> Grind On</p>
         <p><strong>Amount:</strong> PHP <span id="gcash-amount"></span></p>
         <label for="reference_number">Reference Number:</label>
         <input type="text" id="reference_number" name="reference_number" placeholder="Enter reference number">
@@ -333,8 +352,8 @@
     const paymentMethod = paymentMethodInput.value;
 
     if (paymentMethod === "gcash") {
-        const totalAmount = parseFloat(document.getElementById('total-price').textContent.replace('PHP', ''));
-        document.getElementById('gcash-amount').textContent = totalAmount.toFixed(2);
+        // Update the total amount calculation
+        updateTotalForGcash();  // Ensure the total is calculated for Gcash
         document.getElementById('gcash-modal').style.display = "flex";
         return;
     }
@@ -362,24 +381,31 @@ function submitOrder() {
     document.getElementById("orderForm").submit();
 }
 
-    function closeModal() {
-        document.getElementById('gcash-modal').style.display = "none";
-    }
+function closeModal() {
+    document.getElementById('gcash-modal').style.display = "none";
+}
 
-    function updateTotal() {
-        let total = 0;
-        // Get all checked checkboxes and update the total
-        const checkboxes = document.querySelectorAll('.item-checkbox');
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                const price = parseFloat(checkbox.getAttribute('data-price'));
-                const quantity = parseInt(checkbox.getAttribute('data-quantity'));
-                total += price * quantity;
-            }
-        });
-        // Update the total value in the DOM
-        document.getElementById('total-price').textContent = 'PHP' + total.toFixed(2);
-    }
+function updateTotalForGcash() {
+    let total = 0;
+    // Get all checked checkboxes and calculate the total dynamically
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            const price = parseFloat(checkbox.getAttribute('data-price'));
+            const quantity = parseInt(checkbox.getAttribute('data-quantity'));
+            total += price * quantity;
+        }
+    });
+
+    // Update the total value in the DOM and also set it for the Gcash modal
+    document.getElementById('total-price').textContent = 'PHP ' + total.toFixed(2);
+    document.getElementById('gcash-amount').textContent = total.toFixed(2);
+}
+
+const checkboxes = document.querySelectorAll('.item-checkbox');
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', updateTotalForGcash);  // Ensure total is updated when a checkbox is clicked
+});
 </script>
 
 
