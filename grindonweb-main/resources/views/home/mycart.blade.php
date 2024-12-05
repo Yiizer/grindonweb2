@@ -264,22 +264,37 @@
                     <tbody id="cart-items">
                         <?php $total = 0; ?>
                         @foreach ($cart as $cart)
-                            <tr>
-                                <td>
-                                    <input type="checkbox" class="item-checkbox" data-price="{{ $cart->product->price }}" data-quantity="{{ $cart->quantity }}" checked onclick="updateTotal()">
-                                </td>
-                                <td>{{ $cart->product->title }}</td>
-                                <td>PHP {{ number_format($cart->product->price, 2) }}</td>
-                                <td>{{ $cart->size }}</td>
-                                <td>{{ $cart->logo }}</td>
-                                <td>{{ $cart->quantity }}</td>
-                                <td>
-                                    <img src="/products/{{ $cart->product->image }}" alt="{{ $cart->product->title }}">
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger" href="{{ url('delete_cart', $cart->id) }}">Remove</a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="item-checkbox" data-price="{{ $cart->product->price }}" data-quantity="{{ $cart->quantity }}" checked onclick="updateTotal()">
+                            </td>
+                            <td>{{ $cart->product->title }}</td>
+                            <td>PHP {{ number_format($cart->product->price, 2) }}</td>
+                            <td>{{ $cart->size }}</td>
+                            <td>{{ $cart->logo }}</td>
+                            <td>{{ $cart->quantity }}</td>
+                            <td>
+                                @if($cart->product->image)
+                                    @php
+                                        $images = json_decode($cart->product->image); // Decode the JSON string to get an array of image paths
+                                    @endphp
+                                    @if(is_array($images) && count($images) > 0)
+                                        <!-- Only show the first image as thumbnail -->
+                                        <img src="{{ asset(str_replace('\\/', '/', $images[0])) }}" alt="{{ $cart->product->title }}" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+                                    @else
+                                        <img src="{{ asset('images/products/default-image.jpg') }}" alt="No Image" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+                                    @endif
+                                @else
+                                    <img src="{{ asset('images/products/default-image.jpg') }}" alt="No Image" class="thumbnail-image" style="width: 100px; height: auto; cursor: pointer;">
+                                @endif
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="{{ url('delete_cart', $cart->id) }}">Remove</a>
+                            </td>
+                        </tr>
+
+
+
                             <?php $total += $cart->product->price * $cart->quantity; ?>
                         @endforeach
                     </tbody>

@@ -89,7 +89,7 @@ class AdminController extends Controller
             'x_small' => 'required|integer|min:0',
             'x_large' => 'required|integer|min:0',
             'images' => 'nullable|array',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
     
         // Create a new product
@@ -111,7 +111,8 @@ class AdminController extends Controller
     
             foreach ($images as $image) {
                 // Generate a unique file name and store it in the public/images/products folder
-                $imageName = time() . '_' . rand() . '.jpg';
+                $extension = $image->getClientOriginalExtension(); // This will return "webp" for .webp files.
+                $imageName = time() . '_' . rand() . '.' . $extension;
                 // Store the image in the 'public/images/products' folder
                 $image->move(public_path('images/products'), $imageName);  // Store in public/images/products/
                 // Save the relative path to the image

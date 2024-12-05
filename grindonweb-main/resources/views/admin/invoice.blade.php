@@ -95,18 +95,40 @@
                 <p><strong>Price:</strong> PHP {{ $data->product->price }}</p>
                 <p><strong>Quantity:</strong> {{ $data->quantity }}</p>
                 <p><strong>Size:</strong> {{ $data->size }}</p>
-                <p><strong>Color:</strong> {{ $data->color }}</p>
+                <p><strong>Logo:</strong> {{ $data->logo }}</p>
                 <p><strong>Total:</strong> PHP {{ $data->quantity * $data->product->price }}</p>
             </div>
         </div>
 
         <div class="product-image">
-            <img src="products/{{ $data->product->image }}" alt="{{ $data->product->title }}">
-        </div>
+    @if($data->product->image)
+        @php
+            $images = json_decode($data->product->image); // Decode the JSON string to get an array of image paths
+        @endphp
+        @if(is_array($images) && count($images) > 0)
+            <!-- Show only the first image -->
+            <img src="{{ asset(str_replace('\/', '/', $images[0])) }}" alt="{{ $data->product->title }}">
+        @else
+            <img src="{{ asset('images/products/default-image.jpg') }}" alt="No Image">
+        @endif
+    @else
+        <img src="{{ asset('images/products/default-image.jpg') }}" alt="No Image">
+    @endif
+</div>
 
-        <div class="total-section">
-            <h2>Total Amount: PHP {{ $data->quantity * $data->product->price }}</h2>
-        </div>
+<div class="total-section">
+    <h2>Total Amount: PHP {{ $data->quantity * $data->product->price }}</h2>
+</div>
+
+<!-- Reference Number for GCash Payment Method -->
+@if($data->payment_method == 'gcash' && $data->reference_number)
+    <div class="details-title">Payment Details</div>
+    <div class="details-content">
+        <p><strong>Reference Number:</strong> {{ $data->reference_number }}</p>
+    </div>
+@endif
+
+
     </div>
 </body>
 </html>
