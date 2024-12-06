@@ -192,6 +192,348 @@
             font-size: 20px;
             cursor: pointer;
         }
+
+/* Laptop screens */
+@media screen and (min-width: 769px) and (max-width: 1366px) {
+    .div_deg {
+        margin: 20px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .order_deg {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .div_center {
+        width: 100%;
+    }
+
+    .div_center table {
+        width: 100%;
+        font-size: 12px;
+        table-layout: fixed;
+    }
+
+    .div_center table th,
+    .div_center table td {
+        padding: 8px 4px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .div_center table th:first-child,
+    .div_center table td:first-child {
+        width: 5%;
+    }
+
+    .div_center table th:nth-child(2),
+    .div_center table td:nth-child(2) {
+        width: 15%;
+    }
+
+    .div_center table th:nth-child(3),
+    .div_center table td:nth-child(3),
+    .div_center table th:nth-child(4),
+    .div_center table td:nth-child(4),
+    .div_center table th:nth-child(5),
+    .div_center table td:nth-child(5),
+    .div_center table th:nth-child(6),
+    .div_center table td:nth-child(6) {
+        width: 10%;
+    }
+
+    .div_center table th:nth-child(7),
+    .div_center table td:nth-child(7) {
+        width: 15%;
+    }
+
+    .div_center table th:last-child,
+    .div_center table td:last-child {
+        width: 10%;
+    }
+
+    .div_center table img {
+        width: 60px;
+        height: auto;
+    }
+
+    .btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+    .div_deg {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .order_deg {
+        width: 35%;
+        margin-right: 15px;
+    }
+
+    .div_center {
+        width: 63%;
+    }
+
+    .div_center table {
+        width: 100%;
+        font-size: 13px;
+        table-layout: fixed;
+    }
+
+    .div_center table th,
+    .div_center table td {
+        padding: 6px 3px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .div_center table th:first-child,
+    .div_center table td:first-child {
+        width: 5%;
+    }
+
+    .div_center table th:nth-child(2),
+    .div_center table td:nth-child(2) {
+        width: 18%;
+    }
+
+    .div_center table th:nth-child(3),
+    .div_center table td:nth-child(3),
+    .div_center table th:nth-child(4),
+    .div_center table td:nth-child(4),
+    .div_center table th:nth-child(5),
+    .div_center table td:nth-child(5),
+    .div_center table th:nth-child(6),
+    .div_center table td:nth-child(6) {
+        width: 10%;
+    }
+
+    .div_center table th:nth-child(7),
+    .div_center table td:nth-child(7) {
+        width: 12%;
+    }
+
+    .div_center table th:last-child,
+    .div_center table td:last-child {
+        width: 10%;
+    }
+
+    .thumbnail-image {
+        width: 50px;
+        height: auto;
+    }
+
+    .btn {
+        font-size: 11px;
+        padding: 5px 8px;
+    }
+
+    input[type="text"], textarea {
+        font-size: 13px;
+    }
+
+    .div_gap {
+        margin-bottom: 12px;
+    }
+}
+
+
+
+/* Tablet and mobile styles  */
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+    .div_deg {
+        flex-direction: column;
+        margin: 20px 10px;
+    }
+
+    .order_deg {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .div_center {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .div_center table {
+        width: 100%;
+        min-width: 300px;
+        font-size: 12px;
+    }
+
+    .div_center table th,
+    .div_center table td {
+        white-space: nowrap;
+        padding: 6px 4px;
+    }
+
+    .div_center table th:first-child,
+    .div_center table td:first-child {
+        width: 30px;
+    }
+
+    .div_center table th:nth-child(2),
+    .div_center table td:nth-child(2) {
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .div_center table img {
+        width: 40px;
+        height: auto;
+    }
+
+    .div_center:last-of-type {
+        display: flex;
+        justify-content: center;
+        overflow-x: hidden;
+    }
+
+    .div_center:last-of-type table {
+        width: auto;
+        min-width: auto;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .btn-danger {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .modal-content {
+        width: 90%;
+        max-width: 400px;
+    }
+}
+
+
+
+    @media screen and (max-width: 768px) {
+    .div_deg {
+        flex-direction: column;
+        margin: 20px 10px;
+    }
+
+    .order_deg {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .div_center {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+
+    .div_center table {
+        width: 100%;
+        min-width: 300px; /* Reduced from 800px */
+        font-size: 12px;
+    }
+
+    .div_center table th,
+    .div_center table td {
+        white-space: nowrap;
+        padding: 6px 4px;
+    }
+
+    /* Reduce column widths */
+    .div_center table th:first-child,
+    .div_center table td:first-child {
+        width: 30px; /* Checkbox column */
+    }
+
+    .div_center table th:nth-child(2),
+    .div_center table td:nth-child(2) {
+        max-width: 80px; /* Product title */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .div_center table img {
+        width: 40px;
+        height: auto;
+    }
+
+    /* Center the total value table */
+    .div_center:last-of-type {
+        display: flex;
+        justify-content: center;
+        overflow-x: hidden; /* Prevent scrolling for total table */
+    }
+
+    .div_center:last-of-type table {
+        width: auto;
+        min-width: auto;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .btn-danger {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .modal-content {
+        width: 90%;
+        max-width: 400px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .div_deg {
+        margin: 10px 5px;
+    }
+
+    .div_center table {
+        min-width: 280px; /* Even smaller for very small screens */
+    }
+
+    .div_center table th,
+    .div_center table td {
+        padding: 4px 2px;
+        font-size: 11px;
+    }
+
+    .div_center table img {
+        width: 30px;
+    }
+
+    /* Hide less important columns on very small screens */
+    .div_center table th:nth-child(4),
+    .div_center table td:nth-child(4),
+    .div_center table th:nth-child(5),
+    .div_center table td:nth-child(5) {
+        display: none; /* Hide Size and Logo columns */
+    }
+
+    .btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+}
     </style>
 </head>
 
