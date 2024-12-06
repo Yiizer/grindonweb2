@@ -1,7 +1,7 @@
 <header class="header_section">
     <nav class="navbar navbar-expand-lg custom_nav-container">
         <!-- User Icon and Name Section -->
-        @if (Auth::check())
+        <!-- @if (Auth::check())
             <div class="user-info-container">
                 <div class="user-info text-center">
                     <i class="fa fa-user-circle" style="font-size: 36px; color: white;"></i>
@@ -10,7 +10,7 @@
                     </span>
                 </div>
             </div>
-        @endif
+        @endif -->
 
         <!-- Logo Section -->
         <a class="navbar-brand" href="">
@@ -60,11 +60,11 @@
                     @else
                         <a href="{{ url('/login') }}">
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            <span>Login</span>
+                            <span style="color: white;">Login</span>
                         </a>
                         <a href="{{ url('/register') }}">
                             <i class="fa fa-vcard" aria-hidden="true"></i>
-                            <span>Register</span>
+                            <span style="color: white;">Register</span>
                         </a>
                     @endauth
                 @endif
